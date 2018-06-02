@@ -119,8 +119,10 @@
     <ClInclude Include="Allegro\AllegroClassV2.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Drawer.h" />
+    <ClInclude Include="FullService.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Miner.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Output.h" />
     <ClInclude Include="Transaction.h" />
@@ -129,9 +131,11 @@
     <ClCompile Include="Allegro\AllegroClassV2.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Drawer.cpp" />
+    <ClCompile Include="FullService.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Miner.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Output.cpp" />
     <ClCompile Include="Transaction.cpp" />

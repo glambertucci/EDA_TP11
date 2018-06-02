@@ -16,10 +16,17 @@ class Transaction
 {
 public:
 	Transaction();
+	void addInput(Node& nod, int cash);
+	void addOutput(Node& nod, int cash);
 	~Transaction();
 private:
 	CryptoPP::SHA256 hashID;
 	vector <Input> inputs;
 	vector <Output> outputs;
 };
+struct monl {
+	int money;
+	int index;
+};
 
+bool hasfunds(Node& nod, int mani);

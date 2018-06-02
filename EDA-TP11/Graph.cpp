@@ -1,12 +1,11 @@
 #include "Graph.h"
-using namespace std;
-
+#include "Transaction.h"
+#include <vector>
 Graph::Graph(unsigned int node)
 {
 	// Crea todos los nodos y hace el grafo
 	for (int i = 0; i < node; i++)
 		this->nodes.push_back(Node());
-
 	for (int i = 1; i < node-1; i++)
 	{
 		this->nodes[i].nextn = &(nodes[i + 1]);
@@ -20,7 +19,16 @@ Graph::Graph(unsigned int node)
 
 }
 
-
+void Graph::createTransaction(unsigned int source, unsigned int dest, unsigned int lukeDollars) {
+	if (hasfunds(this->nodes[source]), (int)lukeDollars)
+	{
+		Transaction tx;
+		tx.addInput(this->nodes[source], lukeDollars);
+		tx.addOutput(this->nodes[source], lukeDollars);
+		tx.addOutput(this->nodes[dest], lukeDollars);
+	}
+}
 Graph::~Graph()
 {
+	cout << "Eda sux" << endl;
 }

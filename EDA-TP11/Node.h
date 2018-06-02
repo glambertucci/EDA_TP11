@@ -17,6 +17,8 @@ using namespace std;
 
 class Node
 {
+
+	
 public:
 	Node();
 	~Node();
@@ -24,14 +26,18 @@ public:
 	void recieveBlock(Block block, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
 	void checkTransaction(bool& ok, Transaction& Tx);
 	void checkedBlock(bool& ok, Block& block);
-
-private:
-	Node * prev, * post;
+	void createTx();
+	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> getpkey(void) { return this->publicKey; }
+	vector<byte> sign(string dataToSend);
+	bool checkSignature(vector<byte> sig, string dataToSign);
+protected:
+	Node * prev, *post;
 	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey, privateKey;
 	vector <Transaction> UTXO;
 	stack<Block> blockchain;
 	vector <Transaction> newTransactions;
 	queue <Transaction> nonConfirmedTransactions;
+	bool miner;
 	Block actualBlock;
 };
 

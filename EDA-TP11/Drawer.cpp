@@ -1,5 +1,7 @@
 #include "Drawer.h"
 
+
+
 void setUpVertex(vector<float>& vertex);
 bool notPlaced(vector<ALLEGRO_VERTEX>&vertex);
 Drawer::Drawer(vector<Node>& nodes)
