@@ -25,6 +25,12 @@
     <Filter Include="Header Files\LukeDollar">
       <UniqueIdentifier>{361cf1fc-ddc8-44e4-bf6a-e4aaa83dc23f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Allegro">
+      <UniqueIdentifier>{36f6b047-bcf3-4a88-854f-ce4543eb39aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Allegro">
+      <UniqueIdentifier>{b45987a3-4e4f-4a5e-aa19-a588e59f210a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Node.h">
@@ -44,6 +50,15 @@
     </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>Header Files\LukeDollar</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Allegro\AllegroAddons.h">
+      <Filter>Header Files\Allegro</Filter>
+    </ClInclude>
+    <ClInclude Include="Allegro\AllegroClassV2.h">
+      <Filter>Header Files\Allegro</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +82,12 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Allegro\AllegroClassV2.cpp">
+      <Filter>Source Files\Allegro</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
