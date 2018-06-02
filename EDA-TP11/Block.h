@@ -10,6 +10,6 @@ public:
 	Block();
 	~Block();
 private:
-	stack <Transaction>
+	stack <Transaction> block;
 };
 
