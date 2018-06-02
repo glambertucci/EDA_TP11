@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
 
-#include <cryptopp/cryptlib.h>
-#include <cryptopp/osrng.h>
-#include <cryptopp/eccrypto.h>
-#include <cryptopp/oids.h>
-#include <cryptopp/hex.h>
-#include <cryptopp/sha3.h>
+//#include "cryptopp/cryptlib.h"
+//#include "cryptopp/osrng.h"
+//#include "cryptopp/eccrypto.h"
+//#include "cryptopp/oids.h"
+//#include "cryptopp/hex.h"
+//#include "cryptopp/sha3.h"
 
 #include "Output.h"
 
@@ -19,6 +19,6 @@ public:
 	~Input();
 private:
 	OutputPointer * output;
-	vector<byte> signature;
+	vector<unsigned char> signature;
 };
 

@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
 
-#include <cryptopp/cryptlib.h>
-#include <cryptopp/osrng.h>
-#include <cryptopp/eccrypto.h>
-#include <cryptopp/oids.h>
-#include <cryptopp/hex.h>
-#include <cryptopp/sha3.h>
+//#include "cryptlib.h"
+//#include "osrng.h"
+//#include "eccrypto.h"
+//#include "oids.h"
+//#include "hex.h"
+//#include "sha3.h"
 
 #include "Input.h"
 #include "Output.h"
@@ -18,7 +18,7 @@ public:
 	Transaction();
 	~Transaction();
 private:
-	CryptoPP::SHA256 hashID;
+	/*CryptoPP::SHA256 hashID;*/
 	vector <Input> inputs;
 	vector <Output> outputs;
 };
