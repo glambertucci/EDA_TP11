@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <stack>
 
 #include "Transaction.h"
@@ -11,5 +12,9 @@ public:
 	~Block();
 private:
 	stack <Transaction> block;
+	CryptoPP::SHA256 previusBlock;
+	uint32_t number;
+	uint32_t timestamp;
+	uint32_t nonce;
 };
 

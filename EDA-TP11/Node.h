@@ -20,6 +20,11 @@ class Node
 public:
 	Node();
 	~Node();
+	void recieveTransaction(Transaction Tx, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
+	void recieveBlock(Block block, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
+	void checkTransaction(bool& ok, Transaction& Tx);
+	void checkedBlock(bool& ok, Block& block);
+
 private:
 	Node * prev, * post;
 	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey, privateKey;

@@ -13,38 +13,59 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Graph">
+      <UniqueIdentifier>{cca897b3-2f88-462e-a9ff-8688541e28ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LukeDollar">
+      <UniqueIdentifier>{ea38fd62-f441-4cb5-9d2c-f3f119f5e953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graph">
+      <UniqueIdentifier>{275cef66-1def-4335-88f6-0928881795ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\LukeDollar">
+      <UniqueIdentifier>{361cf1fc-ddc8-44e4-bf6a-e4aaa83dc23f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Node.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graph</Filter>
     </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Graph.h">
+      <Filter>Header Files\Graph</Filter>
     </ClInclude>
     <ClInclude Include="Transaction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\LukeDollar</Filter>
     </ClInclude>
     <ClInclude Include="Output.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\LukeDollar</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files\LukeDollar</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Header Files\LukeDollar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Graph.cpp">
+      <Filter>Source Files\Graph</Filter>
+    </ClCompile>
     <ClCompile Include="Node.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graph</Filter>
     </ClCompile>
     <ClCompile Include="Block.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transaction.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\LukeDollar</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\LukeDollar</Filter>
     </ClCompile>
     <ClCompile Include="Output.cpp">
+      <Filter>Source Files\LukeDollar</Filter>
+    </ClCompile>
+    <ClCompile Include="Transaction.cpp">
+      <Filter>Source Files\LukeDollar</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
