@@ -1,5 +1,7 @@
 #include "Drawer.h"
 
+
+
 void setUpVertex(vector<float>& vertex);
 bool notPlaced(vector<float>& vertex);
 Drawer::Drawer(vector<Node>& nodes)

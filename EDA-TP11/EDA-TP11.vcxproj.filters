@@ -60,6 +60,12 @@
     <ClInclude Include="Allegro\AllegroClassV2.h">
       <Filter>Header Files\Allegro</Filter>
     </ClInclude>
+    <ClInclude Include="Miner.h">
+      <Filter>Header Files\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="FullService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graph.cpp">
@@ -88,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="Allegro\AllegroClassV2.cpp">
       <Filter>Source Files\Allegro</Filter>
+    </ClCompile>
+    <ClCompile Include="Miner.cpp">
+      <Filter>Source Files\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="FullService.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

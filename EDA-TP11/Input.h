@@ -8,6 +8,7 @@
 //#include "cryptopp/hex.h"
 //#include "cryptopp/sha3.h"
 
+
 #include "Output.h"
 
 using namespace std;
@@ -16,9 +17,11 @@ class Input
 {
 public:
 	Input();
-	~Input();
+	//~Input();																						
 private:
-	OutputPointer * output;
-	vector<unsigned char> signature;
+	OutputPointer * output;		// Creo que es un puntero al output.
+	vector<byte> signature;												
+																						
 };
+
 
