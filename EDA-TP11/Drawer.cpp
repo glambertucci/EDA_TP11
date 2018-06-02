@@ -3,7 +3,7 @@
 
 
 void setUpVertex(vector<float>& vertex);
-bool notPlaced(vector<ALLEGRO_VERTEX>&vertex);
+bool notPlaced(vector<float>& vertex);
 Drawer::Drawer(vector<Node>& nodes)
 {
 	srand(time(nullptr));
@@ -12,11 +12,14 @@ Drawer::Drawer(vector<Node>& nodes)
 
 	do {
 		vector<unsigned int> replace;
-		for (float& vertex1 : this->vertex){
-			for (float& vertex2 : this->vertex) {
-				if (sqrt(pow(vertex1.x - vertex2.x, 2) + pow(vertex1.y - vertex2.y, 2)) < DISTANCE_THRESHOLD) {
-					vertex1.x = rand() % (int)al_get_display_width(al_get_current_display());
-					vertex1.y = rand() % (int)al_get_display_height(al_get_current_display());
+
+		for (int i = 0; i+2 < this->vertex.size(); i+=2) {
+			for (int a = 0; a+2 < this->vertex.size(); a+=2) {
+				if (a != i) {
+					if (sqrt(pow(vertex[i] - vertex[a], 2) + pow(vertex[i+1] - vertex[a+1], 2)) < DISTANCE_THRESHOLD) {
+						vertex[i] = X_MIN_THRESHOLD + rand() % (int)(al_get_display_width(al_get_current_display()) - X_MAX_THRESHOLD - X_MIN_THRESHOLD);
+						vertex[i+1] = Y_MIN_THRESHOLD + rand() % (int)(al_get_display_height(al_get_current_display()) - Y_MAX_THRESHOLD - Y_MIN_THRESHOLD);
+					}
 				}
 			}
 		}
@@ -33,27 +36,33 @@ void Drawer::Draw()
 	for (int i = 0; i < this->vertex.size(); i++)
 		vert[i] = this->vertex[i];
 
-	al_draw_polygon(vert, this->vertex.size() / 2, ALLEGRO_LINE_JOIN_BEVEL, al_color_name("blue"), 10, 1.0);
+	al_draw_polygon(vert, this->vertex.size() / 2, ALLEGRO_LINE_JOIN_BEVEL, al_color_name("blue"), STROKE_SIZE, 1.0);
+
+	for (int i = 0; i + 2<= this->vertex.size(); i += 2)
+		al_draw_filled_circle(vert[i], vert[i + 1], RADIUS, al_color_name("hotpink"));
 
 	delete vert;
 }
 
-bool notPlaced(vector<ALLEGRO_VERTEX>&vertex) {
+bool notPlaced(vector<float>& vertex) {
 	bool retValue = false;
 
-	for (ALLEGRO_VERTEX& node1 : vertex)
-		for (ALLEGRO_VERTEX& node2 : vertex) {
-			if (sqrt(pow(node1.x - node2.x, 2) + pow(node1.y - node2.y, 2)) < DISTANCE_THRESHOLD) {
-				retValue = true;
-				break;
+	for (int i = 0; i + 2 < vertex.size(); i += 2) {
+		for (int a = 0; a + 2 < vertex.size(); a += 2) {
+			if (a != i) {
+				if (sqrt(pow(vertex[i] - vertex[a], 2) + pow(vertex[i + 1] - vertex[a + 1], 2)) < DISTANCE_THRESHOLD) {
+					retValue = true;
+					break;
+				}
 			}
-			if (retValue)
-				break;
 		}
+		if (retValue)
+			break;
+	}
 	return retValue;
 }
 
 void setUpVertex(vector<float>& vertex) {
-	vertex.push_back(rand() % (int)al_get_display_width(al_get_current_display()));		// X
-	vertex.push_back(rand() % (int)al_get_display_height(al_get_current_display()));	// Y
+	vertex.push_back(X_MIN_THRESHOLD + rand() % (int)(al_get_display_width(al_get_current_display()) - X_MAX_THRESHOLD - X_MIN_THRESHOLD));		// X
+	vertex.push_back(Y_MIN_THRESHOLD + rand() % (int)(al_get_display_height(al_get_current_display()) - Y_MAX_THRESHOLD - Y_MIN_THRESHOLD));	// Y
 }

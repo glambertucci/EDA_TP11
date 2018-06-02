@@ -1,12 +1,14 @@
 #pragma once
 #include <vector>
 
-#include <cryptopp/cryptlib.h>
-#include <cryptopp/osrng.h>
-#include <cryptopp/eccrypto.h>
-#include <cryptopp/oids.h>
-#include <cryptopp/hex.h>
-#include <cryptopp/sha3.h>
+//#include "cryptopp/cryptlib.h"
+//#include "cryptopp/osrng.h"
+//#include "cryptopp/eccrypto.h"
+//#include "cryptopp/oids.h"
+//#include "cryptopp/hex.h"
+//#include "cryptopp/sha3.h"
+
+
 #include "Output.h"
 
 using namespace std;
@@ -17,9 +19,9 @@ public:
 	Input();
 	//~Input();																						
 private:
-	unique_ptr<OutputPointer> output;
+	OutputPointer * output;		// Creo que es un puntero al output.
 	vector<byte> signature;												
-																							
+																						
 };
 
 
