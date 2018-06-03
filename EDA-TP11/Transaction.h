@@ -18,6 +18,8 @@ public:
 	Transaction();
 	void addInput(Node& nod, int cash);
 	void addOutput(Node& nod, int cash);
+	vector <Input> getinp() { return this->inputs; }
+	vector <Output> getoup() { return this->outputs; }
 	~Transaction();
 private:
 	/*CryptoPP::SHA256 hashID;*/

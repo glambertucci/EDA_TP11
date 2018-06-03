@@ -30,6 +30,7 @@ public:
 	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> getpkey(void) { return this->publicKey; }
 	vector<byte> sign(string dataToSend);
 	bool checkSignature(vector<byte> sig, string dataToSign);
+	vector <Transaction> getUTXO() { return this->UTXO; }
 protected:
 	Node * prev, *post;
 	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey, privateKey;

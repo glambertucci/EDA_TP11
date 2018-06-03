@@ -22,8 +22,19 @@ class Output
 public:
 	Output();
 	~Output();
+	vector<byte> getsig() { return this->signature; }
+	double getgp() { return this->guiPesos; }
+	string getstring() {
+		string a; //Literalmente lo mas negro que existe
+		a += guiPesos;
+		for (int i = 0; i < signature.size(); i++)
+			a += signature[i];
+		return a;
+	}
 private:
 	double guiPesos; 
 	vector<byte> signature;
+
 };
+
 
