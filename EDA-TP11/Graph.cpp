@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include "Transaction.h"
 #include <vector>
+
 Graph::Graph(unsigned int node)
 {
 	// Crea todos los nodos y hace el grafo
@@ -11,6 +12,11 @@ Graph::Graph(unsigned int node)
 		this->nodes[i].setNextNode(&(nodes[i + 1]));
 		this->nodes[i].setPrevNode(&(nodes[i - 1]));
 	}
+}
+
+void Graph::run()
+{
+
 }
 
 void Graph::shuffleNodes()
