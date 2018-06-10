@@ -4,26 +4,41 @@
 #define ERR -1
 
 
+
 Transaction::Transaction()
 {
 }
 
-void Transaction::addInput(Node& nod, int cash)
+int Transaction::addInput(Node& nod, int cash)
 {
 	unsigned int index = 0;
 	vector<monl> cash_;
+	int vuelto;
 	do {
-		monl temp = find(nod,(int)index++);
+		monl temp = find(nod,(int)index);
 		if (temp.money > 0)
 		{
 			cash_.push_back(temp);
-			if (sum(cash_) >= cash) {
+			vuelto = sum(cash_) - cash;
+			if (vuelto >= 0) {
 				for (int i = 0; i < cash_.size(); i++) {
-					this->inputs.push_back({ find(nod,(unsigned int)cash_[i].index), });//Deberia pasarle el string de no s eque pero ni idea y todo re tumach y demasiado ahre
+				
+					Input temp_;
+					temp_.output = find(nod, (unsigned int)index);
+					temp_.signature = nod.sign(find(nod, index)->getGPString()); // CACA
+					this->inputs.push_back(temp_);
 				}
 			}
 		}
+		index++;
 	} while (sum(cash_) < cash);
+
+	return vuelto;
+}
+void Transaction::addOutput(Node & nod, int cash)
+{
+	Output temp(nod.getpkey(), cash);
+	this->outputs.push_back(temp);
 }
 Transaction::~Transaction()
 {
@@ -37,7 +52,7 @@ int sum(vector<monl> casho) { //Suma toda la plata en el vector
 }
 
 
-bool hasfunds(Node& nod, int cash) {//Busca fondos en el vector de nodos hasta que me alcance para pagar la cuota del itba
+bool hasFunds(Node& nod, int cash) {//Busca fondos en el vector de nodos hasta que me alcance para pagar la cuota del itba
 	int mani = 0;
 	bool funds = false;
 	do {
@@ -56,9 +71,9 @@ monl find(Node& nod, int index) { //Find que devuelve monl;
 		{
 			Output out = trans.getoup()[0];
 
-			if (nod.checkSignature(out.getsig(), out.getstring()))
+			if (nod.isMyPublicKey(out.getPublicKey()))
 				if ((a++) == index)
-					return { out.getgp(), index };
+					return { out.getGP(), index };
 		}
 	}
 	return  retval;
@@ -69,8 +84,8 @@ int find(Node& nod) {//Find que devuelve solo plata
 	for (Transaction & trans : nod.getUTXO()) {
 		if (trans.getoup().size() == 2) {
 			Output out = trans.getoup()[0];
-			if (nod.checkSignature(out.getsig(), out.getstring())) {
-				money += out.getgp();
+			if (nod.isMyPublicKey(out.getPublicKey())) {
+				money += out.getGP();
 			}
 		}
 	}

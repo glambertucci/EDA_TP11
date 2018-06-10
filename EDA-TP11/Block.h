@@ -10,6 +10,7 @@ class Block
 public:
 	Block();
 	~Block();
+	stack <Transaction> getBlock() { return block; }
 private:
 	stack <Transaction> block;
 	//CryptoPP::SHA256 previusBlock;

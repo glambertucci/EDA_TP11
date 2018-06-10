@@ -22,15 +22,22 @@ class Node
 public:
 	Node();
 	~Node();
-	void recieveTransaction(Transaction Tx, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
-	void recieveBlock(Block block, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
+	void recieveTransaction(Transaction Tx);
 	void checkTransaction(bool& ok, Transaction& Tx);
+	void addTransaction(Transaction &Tx);
+	void sendLastTransaction();
+
+	void recieveBlock(Block block);
 	void checkedBlock(bool& ok, Block& block);
-	void createTx();
+	void addBlock(Block& block);
+
+
+	bool isMyPublicKey(CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256>publicKey);
 	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> getpkey(void) { return this->publicKey; }
 	vector<byte> sign(string dataToSend);
-	bool checkSignature(vector<byte> sig, string dataToSign);
+	bool checkSignature(vector<byte> sig, string dataToSign, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
 	vector <Transaction> getUTXO() { return this->UTXO; }
+
 	void setNextNode(Node* node) { this->post = node; }
 	void setPrevNode(Node* node) { this->prev = node; }
 protected:
@@ -42,5 +49,6 @@ protected:
 	queue <Transaction> nonConfirmedTransactions;
 	bool miner;
 	Block actualBlock;
+	Block nonConfirmedBlock;
 };
 

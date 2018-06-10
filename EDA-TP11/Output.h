@@ -10,30 +10,19 @@
 
 using namespace std;
 
-typedef struct OutputPointer {
-	//CryptoPP::SHA256 HashID;		// Hash de la UTXO de donde saco la plata
-	unsigned int position;			// Posicion del output en el UTXO de donde saco la plata
-
-};
-
 
 class Output
 {
 public:
+	Output(CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey, double guiPesos) { this->publicKey = publicKey; this->guiPesos = guiPesos; }
 	Output();
 	~Output();
-	vector<byte> getsig() { return this->signature; }
-	double getgp() { return this->guiPesos; }
-	string getstring() {
-		string a; //Literalmente lo mas negro que existe
-		a += guiPesos;
-		for (int i = 0; i < signature.size(); i++)
-			a += signature[i];
-		return a;
-	}
+	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> getPublicKey() { return this->publicKey; }
+	double getGP() { return this->guiPesos; }
+	string getGPString() { return to_string(guiPesos); }
 private:
 	double guiPesos; 
-	vector<byte> signature;
+	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey;
 
 };
 

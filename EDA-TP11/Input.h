@@ -17,10 +17,10 @@ class Input
 {
 public:
 	Input();
-	//~Input();																						
-private:
-	OutputPointer * output;		// Creo que es un puntero al output.
-	vector<byte> signature;												
+	Input(Output * out, vector<byte> signature) { this->output = out; this->signature = signature; }
+	~Input();																						
+	Output * output;	// De donde saca plata	
+	vector<byte> signature;			// Firma									
 																						
 };
 

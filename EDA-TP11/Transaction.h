@@ -7,7 +7,7 @@
 //#include "oids.h"
 //#include "hex.h"
 //#include "sha3.h"
-
+#include "Node.h"
 #include "Input.h"
 #include "Output.h"
 
@@ -16,12 +16,11 @@ class Transaction
 {
 public:
 	Transaction();
-	void addInput(Node& nod, int cash);
+	int addInput(Node& nod, int cash); // Devuelve el vuelto
 	void addOutput(Node& nod, int cash);
 	vector <Input> getinp() { return this->inputs; }
 	vector <Output> getoup() { return this->outputs; }
 	~Transaction();
-private:
 	/*CryptoPP::SHA256 hashID;*/
 	vector <Input> inputs;
 	vector <Output> outputs;
@@ -31,4 +30,4 @@ struct monl {
 	int index;
 };
 
-bool hasfunds(Node& nod, int mani);
+bool hasFunds(Node& nod, int mani);
