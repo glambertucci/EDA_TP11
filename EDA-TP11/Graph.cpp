@@ -8,10 +8,10 @@ Graph::Graph(unsigned int node)
 		this->nodes.push_back(Node());
 	for (int i = 1; i < node-1; i++)
 	{
-		this->nodes[i].nextn = &(nodes[i + 1]);
-		this->nodes[i].prevn = &(nodes[i - 1]);
+		this->nodes[i].setNextNode( &(nodes[i + 1]));
+		this->nodes[i].setPrevNode(&(nodes[i - 1]));
 	}
->
+
 	//this->nodes[0].prevn = &(nodes[node -1]);
 	//this->nodes[0].nextn = &(nodes[1]);
 	//this->nodes[node - 1].prev = &(nodes[node - 2]);
@@ -20,7 +20,7 @@ Graph::Graph(unsigned int node)
 }
 
 void Graph::createTransaction(unsigned int source, unsigned int dest, unsigned int lukeDollars) {
-	if (hasfunds(this->nodes[source]), (int)lukeDollars)
+	if (hasfunds(this->nodes[source], (int)lukeDollars))
 	{
 		Transaction tx;
 		tx.addInput(this->nodes[source], lukeDollars);

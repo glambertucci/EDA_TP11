@@ -31,6 +31,8 @@ public:
 	vector<byte> sign(string dataToSend);
 	bool checkSignature(vector<byte> sig, string dataToSign);
 	vector <Transaction> getUTXO() { return this->UTXO; }
+	void setNextNode(Node* node) { this->post = node; }
+	void setPrevNode(Node* node) { this->prev = node; }
 protected:
 	Node * prev, *post;
 	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey, privateKey;
