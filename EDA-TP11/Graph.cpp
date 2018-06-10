@@ -22,12 +22,16 @@ void Graph::shuffleNodes()
 }
 
 void Graph::createTransaction(unsigned int source, unsigned int dest, unsigned int lukeDollars) {
-	if (hasfunds(this->nodes[source], (int)lukeDollars))
+	if (hasFunds(this->nodes[source], (int)lukeDollars))
 	{
 		Transaction tx;
-		tx.addInput(this->nodes[source], lukeDollars);
-		tx.addOutput(this->nodes[source], lukeDollars);
+		int vuelto = tx.addInput(this->nodes[source], lukeDollars);
+		if (vuelto > 0) {
+			tx.addOutput(this->nodes[source], vuelto);
+		}
 		tx.addOutput(this->nodes[dest], lukeDollars);
+
+		nodes[source].recieveTransaction(tx);
 	}
 }
 Graph::~Graph()

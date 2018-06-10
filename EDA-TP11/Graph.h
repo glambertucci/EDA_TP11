@@ -9,6 +9,7 @@ class Graph
 public:
 	Graph(unsigned int nodes);
 	~Graph();
+	void shuffleNodes()
 	void checkAndSendTransactions();
 	void checkAndSendBlocks();
 	void checkAndRecieveTransactions();
