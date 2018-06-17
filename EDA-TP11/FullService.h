@@ -9,6 +9,6 @@ public:
 		this->post = nullptr;
 		this->prev = nullptr;
 	}
-	~FullService();
+	~FullService(){}
 };
 

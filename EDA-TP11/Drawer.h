@@ -13,6 +13,13 @@
 #define STROKE_SIZE (2)
 
 using namespace std;
+
+typedef struct GraficNode {
+	Node * node;
+	GraficNode * prev, * post;
+	float x, y;
+};
+
 class Drawer
 {
 public:
@@ -20,6 +27,8 @@ public:
 	~Drawer();
 	void Draw();
 private:
-	vector<float> vertex;
+	void linkVertexAndNode(vector<Node>&nodes);
+	vector<GraficNode> GraficNodes;
+
 };
 

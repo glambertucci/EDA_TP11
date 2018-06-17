@@ -69,7 +69,7 @@ void Node::addBlock(Block & block)
 	blockchain.push(block);
 }
 
-bool Node::isMyPublicKey(CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256> publicKey)
+bool Node::isMyPublicKey(ECDSA<ECP, SHA256>::PublicKey publicKey)
 {
 	string hashCheck = "Guido sos re tonto";
 
@@ -80,10 +80,11 @@ bool Node::isMyPublicKey(CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256> public
 
 vector<byte>  Node::sign(string dataToSign) {
 	/*Se firmará un conjunto de datos de manera que cualquier usuario pueda verificar que la firma es válida*/
-	vector<byte> signature = getSignature(this->privateKey, dataToSign); //Firmamos un mensaje con la private key generada.
+	vector<byte> signature = getSignature(privateKey, dataToSign); //Firmamos un mensaje con la private key generada.
+	return signature;
 
 }
-bool Node::checkSignature(vector<byte> sig,string dataToSign, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey)
+bool Node::checkSignature(vector<byte> sig,string dataToSign, ECDSA<ECP, SHA256>::PublicKey publicKey)
 {
 	return  verifySignature(publicKey, dataToSign, sig); //Cualquier podrá chequear la validez de la firma (checksig=true)
 }

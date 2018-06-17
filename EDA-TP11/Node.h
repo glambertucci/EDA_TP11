@@ -3,12 +3,14 @@
 #include <stack>
 #include <queue>
 
-#include <cryptopp/cryptlib.h>
-#include <cryptopp/osrng.h>
-#include <cryptopp/eccrypto.h>
-#include <cryptopp/oids.h>
-#include <cryptopp/hex.h>
-#include <cryptopp/sha3.h>
+#include "CryptoHelper.h"
+
+#include "cryptopp/cryptlib.h"
+#include "cryptopp/osrng.h"
+#include "cryptopp/eccrypto.h"
+#include "cryptopp/oids.h"
+#include "cryptopp/hex.h"
+#include "cryptopp/sha3.h"
 
 #include "Transaction.h"
 #include "Block.h"
@@ -32,17 +34,20 @@ public:
 	void addBlock(Block& block);
 
 
-	bool isMyPublicKey(CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256>publicKey);
-	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> getpkey(void) { return this->publicKey; }
+	bool isMyPublicKey(ECDSA<ECP, SHA256>::PublicKey publicKey);
+	ECDSA<ECP, SHA256>::PublicKey getpkey(void) { return this->publicKey; }
 	vector<byte> sign(string dataToSend);
-	bool checkSignature(vector<byte> sig, string dataToSign, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
+	bool checkSignature(vector<byte> sig, string dataToSign, ECDSA<ECP, SHA256>::PublicKey publicKey);
 	vector <Transaction> getUTXO() { return this->UTXO; }
 
 	void setNextNode(Node* node) { this->post = node; }
 	void setPrevNode(Node* node) { this->prev = node; }
+	Node * getNextNode() { return post; }
+	Node * getPrevNode() { return prev; }
 protected:
 	Node * prev, *post;
-	CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey, privateKey;
+	ECDSA<ECP, SHA256>::PrivateKey privateKey;
+	ECDSA<ECP, SHA256>::PublicKey publicKey;
 	vector <Transaction> UTXO;
 	stack<Block> blockchain;
 	vector <Transaction> newTransactions;

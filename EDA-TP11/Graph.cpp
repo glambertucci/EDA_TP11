@@ -1,6 +1,8 @@
 #include "Graph.h"
-#include "Transaction.h"
+#include "TransactionHelper.h"
 #include <vector>
+
+
 Graph::Graph(unsigned int node)
 {
 	// Crea todos los nodos y hace el grafo
@@ -25,16 +27,18 @@ void Graph::createTransaction(unsigned int source, unsigned int dest, unsigned i
 	if (hasFunds(this->nodes[source], (int)lukeDollars))
 	{
 		Transaction tx;
-		int vuelto = tx.addInput(this->nodes[source], lukeDollars);
+		int vuelto = addInput(this->nodes[source],tx, lukeDollars);
 		if (vuelto > 0) {
-			tx.addOutput(this->nodes[source], vuelto);
+			addOutput(this->nodes[source],tx, vuelto);
 		}
-		tx.addOutput(this->nodes[dest], lukeDollars);
+		addOutput(this->nodes[dest], tx, lukeDollars);
 
 		nodes[source].recieveTransaction(tx);
 	}
 }
+void Graph::run()
+{
+}
 Graph::~Graph()
 {
-	cout << "Eda sux" << endl;
 }

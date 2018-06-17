@@ -2,11 +2,3 @@
 
 
 
-FullService::FullService()
-{
-}
-
-
-FullService::~FullService()
-{
-}
