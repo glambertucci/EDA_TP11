@@ -15,6 +15,11 @@ Graph::Graph(unsigned int node)
 	}
 }
 
+void Graph::run()
+{
+
+}
+
 void Graph::shuffleNodes()
 {
 	for (int i = 0; i < ((this->nodes.size()) / 2); i++)
