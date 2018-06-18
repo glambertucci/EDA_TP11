@@ -22,7 +22,7 @@ class Node
 
 	
 public:
-	Node();
+	Node(int a);
 	~Node();
 	void recieveTransaction(Transaction Tx);
 	void checkTransaction(bool& ok, Transaction& Tx);
@@ -36,6 +36,8 @@ public:
 
 	bool isMyPublicKey(ECDSA<ECP, SHA256>::PublicKey publicKey);
 	ECDSA<ECP, SHA256>::PublicKey getpkey(void) { return this->publicKey; }
+	int getNum(void) { return num; }//DEBUG
+	bool isMyNum(int a) { return (a == num); }//DEBUG
 	vector<byte> sign(string dataToSend);
 	bool checkSignature(vector<byte> sig, string dataToSign, ECDSA<ECP, SHA256>::PublicKey publicKey);
 	vector <Transaction> getUTXO() { return this->UTXO; }
@@ -45,6 +47,7 @@ public:
 	Node * getNextNode() { return post; }
 	Node * getPrevNode() { return prev; }
 protected:
+	int num;
 	Node * prev, *post;
 	ECDSA<ECP, SHA256>::PrivateKey privateKey;
 	ECDSA<ECP, SHA256>::PublicKey publicKey;

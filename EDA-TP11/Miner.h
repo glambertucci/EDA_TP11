@@ -4,7 +4,7 @@ class Miner :
 	public Node
 {
 public:
-	Miner() {
+	Miner(int a):Node(a) {
 		this->miner = true;
 		this->post = nullptr;
 		this->prev = nullptr;

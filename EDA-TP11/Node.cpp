@@ -2,8 +2,9 @@
 
 
 
-Node::Node()
+Node::Node(int a)
 {
+	this->num = a;
 }
 
 

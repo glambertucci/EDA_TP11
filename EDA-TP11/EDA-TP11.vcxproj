@@ -117,7 +117,7 @@
       <AdditionalIncludeDirectories>C:\Users\luckd\Documents\Facultad\2018Q1\EDA\EDA_TP11\packages\cryptopp.5.6.5.4\build\native\include\cryptopp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\luckd\Documents\Facultad\2018Q1\EDA\EDA_TP11\packages\cryptopp.v140.5.6.5.2\lib\native\v140\windesktop\msvcstl\Win32\Release\md;C:\Users\luckd\Documents\Facultad\2018Q1\EDA\EDA_TP11\packages\cryptopp.v140.5.6.5.2\lib\native\v140\windesktop\msvcstl\Win32\Debug\md;C:\Users\luckd\Documents\Facultad\2018Q1\EDA\EDA_TP11\packages\cryptopp.v140.5.6.5.2\lib\native\v140\windesktop\msvcstl\x64\Release\md;C:\Users\luckd\Documents\Facultad\2018Q1\EDA\EDA_TP11\packages\cryptopp.v140.5.6.5.2\lib\native\v140\windesktop\msvcstl\x64\Debug\md;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\luckd\Documents\Facultad\2018Q1\EDA\EDA_TP11\packages\cryptopp.v140.5.6.5.2\lib\native\v140\windesktop\msvcstl\x64\Debug\md;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cryptopp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -152,6 +152,8 @@
   <ItemGroup>
     <ClInclude Include="Allegro\AllegroAddons.h" />
     <ClInclude Include="Allegro\AllegroClassV2.h" />
+    <ClInclude Include="Allegro\AllegroFactory.h" />
+    <ClInclude Include="Allegro\WrittenBox.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="CryptoHelper.h" />
     <ClInclude Include="Drawer.h" />
@@ -166,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Allegro\AllegroClassV2.cpp" />
+    <ClCompile Include="Allegro\WrittenBox.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="CryptoHelper.cpp" />
     <ClCompile Include="Drawer.cpp" />

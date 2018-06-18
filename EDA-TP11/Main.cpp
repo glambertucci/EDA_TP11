@@ -15,14 +15,14 @@ int main(int argc, char ** argv)
 	Drawer drawer(nodes);
 	drawer.Draw();
 	allegro.updateDisplay();
-	do{
-		web.run();
+	//do{
+	//	web.run();
 
 
-	} while ();
+	//} while (true);
 
 
 
-	getchar();
+	
 }
 

@@ -9,6 +9,8 @@ AllegroClassV2::AllegroClassV2(Allegro::InitMode mode, float width, float height
 	switch (mode) {
 	case Allegro::InitMode::Full:
 		if (success)
+			initVideoAddon();
+		if (success)
 			initAudioAddon();
 		if (success)
 			initImageAddon();
@@ -124,6 +126,14 @@ void AllegroClassV2::initPrimitivesAddon()
 	}
 }
 
+void AllegroClassV2::initVideoAddon()
+{
+	if (videoAddon == nullptr) {
+		this->videoAddon = new VideoAddon();
+		this->success = videoAddon->getSuccess();
+	}
+}
+
 void AllegroClassV2::uninstallImageAddon()
 {
 	if (imageAddon != nullptr)
@@ -178,18 +188,65 @@ void AllegroClassV2::uninstallPrimitivesAddon()
 		delete primitivesAddon;
 }
 
+void AllegroClassV2::uninstallVideoAddon()
+{
+	if (videoAddon != nullptr)
+		delete videoAddon;
+}
+
 void AllegroClassV2::registerAllAvailableEventsSource()
 {
 	if (eventsAddon != nullptr) {
 		if (this->timerAddon != nullptr)
-			eventsAddon->registerEventSource(timerAddon);
+			eventsAddon->registerEventSourceAddon(timerAddon);
 		if (this->keyboardAddon != nullptr)
-			eventsAddon->registerEventSource(keyboardAddon);
+			eventsAddon->registerEventSourceAddon(keyboardAddon);
 		if (this->mouseAddon != nullptr)
-			eventsAddon->registerEventSource(mouseAddon);
+			eventsAddon->registerEventSourceAddon(mouseAddon);
 		if (this->displayAddon != nullptr)
-			eventsAddon->registerEventSource(displayAddon);
+			eventsAddon->registerEventSourceAddon(displayAddon);
 	}
+}
+
+void AllegroClassV2::registerEventSource(ALLEGRO_VIDEO * video)
+{
+	if (this->eventsAddon != nullptr)
+		eventsAddon->registerEventSource(video);
+}
+
+void AllegroClassV2::registerEventSource(ALLEGRO_DISPLAY * disp)
+{
+	if (this->eventsAddon != nullptr)
+		eventsAddon->registerEventSource(disp);
+}
+
+void AllegroClassV2::registerEventSource(ALLEGRO_TIMER * timer)
+{
+	if (this->eventsAddon != nullptr)
+		eventsAddon->registerEventSource(timer);
+}
+
+void AllegroClassV2::unregisterEventSource(ALLEGRO_VIDEO * video)
+{
+	if (eventsAddon != nullptr)
+		al_unregister_event_source(this->eventsAddon->getEventQueue(), al_get_video_event_source(video));
+}
+
+void AllegroClassV2::unregisterEventSource(ALLEGRO_DISPLAY * disp)
+{
+	if (eventsAddon != nullptr)
+		al_unregister_event_source(this->eventsAddon->getEventQueue(), al_get_display_event_source(disp));
+}
+
+void AllegroClassV2::unregisterEventSource(ALLEGRO_TIMER * timer)
+{
+	if (eventsAddon != nullptr)
+		al_unregister_event_source(this->eventsAddon->getEventQueue(), al_get_timer_event_source(timer));
+}
+
+ALLEGRO_EVENT_QUEUE * AllegroClassV2::getEventQueue()
+{
+	return this->eventsAddon->getEventQueue();
 }
 
 void AllegroClassV2::setDisplayColor(ALLEGRO_COLOR color)
@@ -219,4 +276,5 @@ AllegroClassV2::~AllegroClassV2()
 	this->uninstallEventsAddon();
 	this->uninstallTimerAddon();
 	this->uninstallPrimitivesAddon();
+	this->uninstallVideoAddon();
 }

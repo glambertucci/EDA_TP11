@@ -49,7 +49,7 @@ void Drawer::createInformationWindow(ALLEGRO_DISPLAY * displ, void * node)
 {
 	shared_ptr<NodeInfo> temp(new NodeInfo);
 	temp->display = displ;
-	temp->node = (GraficNode *)node;
+	temp->graficNode = (GraficNode *)node;
 	
 	float w = al_get_display_width(displ), h = al_get_display_height(displ);
 	float xOffset = 20;
@@ -72,7 +72,8 @@ void Drawer::createInformationWindow(ALLEGRO_DISPLAY * displ, void * node)
 	temp->titles.push_back(FakeTransaction);
 	i = 0;
 
-	shared_ptr<WrittenBox> PublicKeyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, to_string(temp->node->node->getpkey()), "font.ttf", "white"))
+	//shared_ptr<WrittenBox> PublicKeyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, to_string(temp->graficNode->node->getpkey()), "font.ttf", "white"))
+	shared_ptr<WrittenBox> PublicKeyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, to_string(temp->graficNode->node->getNum()), "font.ttf", "white")) //DEBUG
 		, PrivateKeyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "", "font.ttf", "white"))
 		, nodeTypeValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Miner", "font.ttf", "white"))
 		, MoneyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "0", "font.ttf", "white"))
@@ -96,12 +97,12 @@ GraficNode * Drawer::NodePressed(int x, int y)
 
 void Drawer::buttonPressed(int x, int y, ALLEGRO_DISPLAY * displ)
 {
-	for (shared_ptr<NodeInfo>& nodeInfo : this->windows) {
-		for (shared_ptr < WrittenBox > &wbox : nodeInfo->titles) {
-			if (wbox->checkIfPressed(x, y) && displ == nodeInfo->display)
-				nodeInfo->node->node->createTrans();
-		}
-	}
+	//for (shared_ptr<NodeInfo>& nodeInfo : this->windows) {
+	//	for (shared_ptr < WrittenBox > &wbox : nodeInfo->titles) {
+	//		if (wbox->checkIfPressed(x, y) && displ == nodeInfo->display)
+	//			//nodeInfo->graficNode->node->createTrans();
+	//	}
+	//}
 }
 
 void Drawer::closeInformationWindow(ALLEGRO_DISPLAY * display)
@@ -120,39 +121,43 @@ void Drawer::Draw()
 		al_draw_line(gfNode.x, gfNode.y, gfNode.post->x, gfNode.post->y, al_color_name("blue"), 3.0);
 	}
 
-
 	for (GraficNode& gfNode : GraficNodes) {
-		chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
-		if ((timePassed.count() * 1000) > 0 && (timePassed.count() * 1000) <= (3 * 1000 * 1000)) {
-			float increaseFactor = timePassed.count() * 1000;
-
-			increaseFactor = ((-8 * increaseFactor) / (3000.0)) + 8;
-
-
-			al_draw_line(gfNode.x, gfNode.y, gfNode.post->x, gfNode.post->y, al_color_name("green"), 3.0 + increaseFactor);
-			al_draw_line(gfNode.x, gfNode.y, gfNode.prev->x, gfNode.prev->y, al_color_name("green"), 3.0 + increaseFactor);
-
-		}
+		al_draw_line(gfNode.x, gfNode.y, gfNode.prev->x, gfNode.prev->y, al_color_name("white"), 3.0);
 	}
+
+
+	//for (GraficNode& gfNode : GraficNodes) {
+	//	//chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
+	//	//if ((timePassed.count() * 1000) > 0 && (timePassed.count() * 1000) <= (3 * 1000 * 1000)) {
+	//		//float increaseFactor = timePassed.count() * 1000;
+
+	//		//increaseFactor = ((-8 * increaseFactor) / (3000.0)) + 8;
+
+
+	//		//al_draw_line(gfNode.x, gfNode.y, gfNode.post->x, gfNode.post->y, al_color_name("green"), 3.0 + increaseFactor);
+	//		//al_draw_line(gfNode.x, gfNode.y, gfNode.prev->x, gfNode.prev->y, al_color_name("green"), 3.0 + increaseFactor);
+
+	//	}
+	//}
 
 	for (GraficNode& gfNode : GraficNodes) {
 		al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS, al_color_name("hotpink"));
 	}
 
-	for (GraficNode& gfNode : GraficNodes) {
+	//for (GraficNode& gfNode : GraficNodes) {
 
-		chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
-		if ((timePassed.count() * 1000) > 0 && (timePassed.count() * 1000) <= (3 * 1000 * 1000)) {
-			float increaseFactor = timePassed.count() * 1000;
+	//	chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
+	//	if ((timePassed.count() * 1000) > 0 && (timePassed.count() * 1000) <= (3 * 1000 * 1000)) {
+	//		float increaseFactor = timePassed.count() * 1000;
 
-			increaseFactor = ((-15 * increaseFactor) / (3000.0)) + 15;
+	//		increaseFactor = ((-15 * increaseFactor) / (3000.0)) + 15;
 
 
-			al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS + increaseFactor, al_color_name("hotpink"));
+	//		al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS + increaseFactor, al_color_name("hotpink"));
 
-		}
-		
-	}
+	//	}
+	//	
+	//}
 }
 
 void Drawer::DrawInformationWindows()
@@ -176,7 +181,7 @@ void Drawer::DrawInformationWindows()
 void Drawer::updateInformationWindows()
 {
 	for (shared_ptr< NodeInfo>& nodeInfo : this->windows) {
-		string publicKey = to_string(nodeInfo->node->node->getpkey());
+		string publicKey = to_string(nodeInfo->graficNode->node->getNum());  //DEBUG
 		string OldPublickKey = nodeInfo->values[0]->getText();
 		if (publicKey.compare(OldPublickKey))
 			nodeInfo->values[0]->setText(publicKey);
@@ -200,7 +205,8 @@ void Drawer::linkVertexAndNode(vector<Node>& nodes)
 		
 			Node * temp = gfNode.node->getNextNode();
 			int index = 0;
-			while (!temp->isMyPublicKey(nodes[index].getpkey()))
+			//while (!temp->isMyPublicKey(nodes[index].getpkey()))//DEBUG
+			while (!temp->isMyNum(nodes[index].getNum()))
 			{
 				index++;
 			};
@@ -209,7 +215,8 @@ void Drawer::linkVertexAndNode(vector<Node>& nodes)
 	for (GraficNode& gfNode : GraficNodes) {
 			Node * temp = gfNode.node->getPrevNode();
 			int index = 0;
-			while (!temp->isMyPublicKey(nodes[index].getpkey())) {
+			//while (!temp->isMyPublicKey(nodes[index].getpkey())) {//DEBUG
+			while (!temp->isMyNum(nodes[index].getNum())){
 				index++;
 			};
 			gfNode.prev = &GraficNodes[index];

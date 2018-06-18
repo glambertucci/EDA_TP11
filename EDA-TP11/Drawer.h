@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <math.h>
-#include "AllegroClassV2.h"
-#include "WrittenBox.h"
+#include "Allegro/AllegroClassV2.h"
+#include "Allegro/WrittenBox.h"
 #include "Node.h"
 #include <memory>
 #include <chrono>
@@ -29,7 +29,7 @@ typedef struct GraficNode {
 typedef struct NodeInfo
 {
 	ALLEGRO_DISPLAY* display;
-	GraficNode * node;
+	GraficNode * graficNode;
 	vector<shared_ptr<WrittenBox>> titles;
 	vector<shared_ptr<WrittenBox>> values;
 	~NodeInfo() { al_destroy_display(display); titles.clear(); values.clear(); }
@@ -40,14 +40,19 @@ class Drawer
 public:
 	Drawer(vector<Node>& nodes);
 	~Drawer();
+	//Carga de informacion de und determinado nodo a una pantalla
 	void createInformationWindow(ALLEGRO_DISPLAY * displ, void * node);
+	//Si se clickea sobre un nodo, esta funcion devuelve un puntero al nodo presionado
 	GraficNode* NodePressed(int x, int y);
 	// En el programa de verdad deberia devolver un puntero al nodo, o su public key, asi graph sabe todo. Lo mejor seria una estructura
 	void buttonPressed(int x, int y, ALLEGRO_DISPLAY * displ);
+	// Cierra una ventana de informacion dada su display
 	void closeInformationWindow(ALLEGRO_DISPLAY * display);
+	// Dibuja sobre la pantalla de inforamcion
 	void DrawInformationWindows();
+	// Actualiza los datos de la pantalla de inforamcion
 	void updateInformationWindows();
-
+	// Dibuja los nodos
 	void Draw();
 private:
 	void linkVertexAndNode(vector<Node>&nodes);

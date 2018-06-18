@@ -7,7 +7,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
-
+#include <allegro5/allegro_video.h>
 
 namespace Allegro {
 	// Modos de inicializacion de allegro:
@@ -110,7 +110,7 @@ public:
 class TimerAddon : public Addon {
 public:
 	TimerAddon() { this->initSuccess(); }
-	TimerAddon(float fps) { if (refresh = al_create_timer(1 / fps)) this->initSuccess(); }
+	TimerAddon(float fps) { if (refresh = al_create_timer(1 / fps)) this->initSuccess(); al_start_timer(this->refresh); }
 	ALLEGRO_TIMER * getRefreshTimer() { return refresh; }
 	~TimerAddon() { if (refresh != nullptr) al_destroy_timer(refresh); }
 private:
@@ -135,12 +135,23 @@ class EventsAddon : public Addon {
 public:
 	EventsAddon() { if (eventQueue = al_create_event_queue()) this->initSuccess(); }
 
-	void registerEventSource(MouseAddon * mouse) { al_register_event_source(eventQueue, al_get_mouse_event_source()); }
-	void registerEventSource(KeyboardAddon * keyboard) { al_register_event_source(eventQueue, al_get_keyboard_event_source()); }
-	void registerEventSource(DisplayAddon * display) { al_register_event_source(eventQueue, al_get_display_event_source(display->getDisplay())); }
-	void registerEventSource(TimerAddon * timer) { al_register_event_source(eventQueue, al_get_timer_event_source(timer->getRefreshTimer())); }
+	void registerEventSourceAddon(MouseAddon * mouse) { al_register_event_source(eventQueue, al_get_mouse_event_source()); }
+	void registerEventSourceAddon(KeyboardAddon * keyboard) { al_register_event_source(eventQueue, al_get_keyboard_event_source()); }
+	void registerEventSourceAddon(DisplayAddon * display) { al_register_event_source(eventQueue, al_get_display_event_source(display->getDisplay())); }
+	void registerEventSourceAddon(TimerAddon * timer) { al_register_event_source(eventQueue, al_get_timer_event_source(timer->getRefreshTimer())); }
+	void registerEventSource(ALLEGRO_VIDEO *video) { al_register_event_source(eventQueue, al_get_video_event_source(video)); }
+	void registerEventSource(ALLEGRO_DISPLAY * disp) { al_register_event_source(eventQueue, al_get_display_event_source(disp)); }
+	void registerEventSource(ALLEGRO_TIMER * timer) { al_register_event_source(eventQueue, al_get_timer_event_source(timer)); }
+	ALLEGRO_EVENT_QUEUE * getEventQueue() { return eventQueue; }
 
 	~EventsAddon() { if (eventQueue != nullptr) al_destroy_event_queue(eventQueue); }
 private:
 	ALLEGRO_EVENT_QUEUE * eventQueue = nullptr;
+};
+
+class VideoAddon : public Addon {
+public:
+	VideoAddon() { if (al_init_video_addon()) this->initSuccess(); }
+
+	~VideoAddon() { al_shutdown_video_addon(); }
 };
