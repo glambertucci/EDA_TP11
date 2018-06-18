@@ -166,7 +166,7 @@ void Drawer::loadAssets()
 	for (int i = 1; i <= this->GraficNodes.size(); i++) {
 		string file = "Faces/" + to_string(i) + ".jpg";
 		GraficNodes[i - 1].image = al_load_bitmap(file.c_str());
-	}
+ 	}
 }
 
 void Drawer::unloadAssets()

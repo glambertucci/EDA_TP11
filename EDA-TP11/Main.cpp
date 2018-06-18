@@ -17,9 +17,11 @@ int main(int argc, char ** argv)
 	Drawer drawer(nodes);
 	ALLEGRO_DISPLAY * mainDisp = al_get_current_display();
 	AllegroDisplayFactory displayFactory;
+	AllegroKeyboardFactory keyboardFactory;
 	bool leave = false;
 	ALLEGRO_EVENT ev;
 	
+	WritableBox *cash = keyboardFactory.createWritableBox(KeyboardMode::Numeric, 0, 0, 15, 10, "font.ttf", "white");
 
 	while (!leave) {
 		if (al_get_next_event(allegro.getEventQueue(), &ev)) {
@@ -32,8 +34,7 @@ int main(int argc, char ** argv)
 				allegro.updateDisplay();
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
-				if (ev.keyboard.keycode == ALLEGRO_KEY_SPACE)
-					//nodes[0].createTrans();
+				cash->input(ev);
 				break;
 			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
 				if (ev.mouse.display == mainDisp) {

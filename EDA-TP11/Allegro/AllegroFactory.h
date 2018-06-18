@@ -1,5 +1,9 @@
 #pragma once
+#include "WritableBox.h"
+#include <string>
 #include <vector>
+
+using namespace std;
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_acodec.h>
@@ -10,6 +14,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_video.h>
+
+
 
 using namespace std;
 
@@ -29,11 +35,63 @@ public:
 			}
 		return temp;
 	}
-	void destroy(ALLEGRO_DISPLAY * display) { al_destroy_display(display); }
+	void destroy(ALLEGRO_DISPLAY * display) { 
+		int i;
+		bool kill = false;
+		for (i = 0; i < all.size(); i++) {
+			if (all[i] == display)
+				kill = true;
+		}
+		if (kill) {
+			all.erase(all.begin() + i);
+			al_destroy_display(display);
+		}
+	}
 
 private:
 	vector<ALLEGRO_DISPLAY *> all;
 };
+
+class AllegroKeyboardFactory
+{
+public:
+	AllegroKeyboardFactory()
+	{
+	}
+
+	~AllegroKeyboardFactory()
+	{
+		int i;
+		for (i = 0; i < boxes.size(); i++)
+			delete boxes[i];
+	}
+
+	
+	
+	
+	WritableBox * createWritableBox(int mode, float x_, float y_, unsigned int maxLenght, int fontSize_, const char * fontPath, const char * fontColor) {
+		WritableBox * temp = new WritableBox(mode, x_, y_, maxLenght, fontSize_, fontPath, fontColor);
+		boxes.push_back(temp);
+		return temp;
+	}
+
+	void destroy(WritableBox* box){
+		int i;
+		bool kill = false;
+		for (i = 0; i < boxes.size(); i++) {
+			if (boxes[i] == box)
+				kill = true;
+		}
+		if (kill) {
+			boxes.erase(boxes.begin() + i);
+			delete box;
+		}
+	}
+
+private:
+	vector<WritableBox*>boxes;
+};
+
 
 
 
