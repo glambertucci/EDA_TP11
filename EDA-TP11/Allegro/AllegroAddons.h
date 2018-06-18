@@ -29,6 +29,7 @@ public:
 	bool getSuccess() { return success; }
 protected:
 	void initSuccess() { this->success = true; }
+private:
 	bool success = false;
 };
 

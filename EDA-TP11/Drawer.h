@@ -22,6 +22,7 @@ typedef struct GraficNode {
 	GraficNode * prev, * post;
 
 	Node * node;
+	ALLEGRO_BITMAP * image = nullptr;
 
 };
 
@@ -54,7 +55,10 @@ public:
 	void updateInformationWindows();
 	// Dibuja los nodos
 	void Draw();
+	
 private:
+	void loadAssets();
+	void unloadAssets();
 	void linkVertexAndNode(vector<Node>&nodes);
 	vector<GraficNode> GraficNodes;
 	vector <shared_ptr<NodeInfo>> windows;

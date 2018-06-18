@@ -185,6 +185,33 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Faces\1.jpg" />
+    <Image Include="Faces\10.jpg" />
+    <Image Include="Faces\11.jpg" />
+    <Image Include="Faces\12.jpg" />
+    <Image Include="Faces\13.jpg" />
+    <Image Include="Faces\14.jpg" />
+    <Image Include="Faces\15.jpg" />
+    <Image Include="Faces\16.jpg" />
+    <Image Include="Faces\17.jpg" />
+    <Image Include="Faces\18.jpg" />
+    <Image Include="Faces\19.JPG" />
+    <Image Include="Faces\2.jpg" />
+    <Image Include="Faces\20.jpg" />
+    <Image Include="Faces\21.jpg" />
+    <Image Include="Faces\22.jpg" />
+    <Image Include="Faces\23.jpg" />
+    <Image Include="Faces\24.jpg" />
+    <Image Include="Faces\25.jpg" />
+    <Image Include="Faces\3.jpg" />
+    <Image Include="Faces\4.jpg" />
+    <Image Include="Faces\5.jpg" />
+    <Image Include="Faces\6.jpg" />
+    <Image Include="Faces\7.jpg" />
+    <Image Include="Faces\8.jpg" />
+    <Image Include="Faces\9.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\cryptopp.android.5.6.5.2\build\native\cryptopp.android.targets" Condition="Exists('..\packages\cryptopp.android.5.6.5.2\build\native\cryptopp.android.targets')" />

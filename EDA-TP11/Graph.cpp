@@ -33,7 +33,7 @@ void Graph::run()
 void Graph::shuffleNodes()
 {
 	srand(time(NULL));
-	for (int i = 0; i < ((this->nodes.size()) / 2); i++)
+	for (int i = 0; i < ((this->nodes.size())); i++)
 	{
 		int a = rand() % nodes.size();
 		int b = rand() % nodes.size();

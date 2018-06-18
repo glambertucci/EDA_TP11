@@ -126,4 +126,81 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Faces\1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\4.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\5.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\6.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\7.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\8.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\9.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\10.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\11.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\12.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\13.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\14.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\15.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\16.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\17.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\18.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\19.JPG">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\20.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\21.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\22.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\23.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\24.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Faces\25.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

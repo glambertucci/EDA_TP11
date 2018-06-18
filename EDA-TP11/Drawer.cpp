@@ -37,10 +37,12 @@ Drawer::Drawer(vector<Node>& nodes)
 		gfNode.y = vertex[index+1];
 		index += 2;
 	}
+	this->loadAssets();
 }
 
 Drawer::~Drawer()
 {
+	this->unloadAssets();
 	this->windows.clear();
 	this->GraficNodes.clear();
 }
@@ -121,9 +123,7 @@ void Drawer::Draw()
 		al_draw_line(gfNode.x, gfNode.y, gfNode.post->x, gfNode.post->y, al_color_name("blue"), 3.0);
 	}
 
-	for (GraficNode& gfNode : GraficNodes) {
-		al_draw_line(gfNode.x, gfNode.y, gfNode.prev->x, gfNode.prev->y, al_color_name("white"), 3.0);
-	}
+	/// NO BORRAR EL CODIGO COMENTADO DE ESTA FUNCION
 
 
 	//for (GraficNode& gfNode : GraficNodes) {
@@ -141,7 +141,8 @@ void Drawer::Draw()
 	//}
 
 	for (GraficNode& gfNode : GraficNodes) {
-		al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS, al_color_name("hotpink"));
+		al_draw_scaled_bitmap(gfNode.image, 0, 0, al_get_bitmap_width(gfNode.image), al_get_bitmap_height(gfNode.image), gfNode.x - RADIUS, gfNode.y - RADIUS, 2 * RADIUS, 2 * RADIUS, 0);
+		//al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS, al_color_name("hotpink"));
 	}
 
 	//for (GraficNode& gfNode : GraficNodes) {
@@ -158,6 +159,20 @@ void Drawer::Draw()
 	//	}
 	//	
 	//}
+}
+
+void Drawer::loadAssets()
+{
+	for (int i = 1; i <= this->GraficNodes.size(); i++) {
+		string file = "Faces/" + to_string(i) + ".jpg";
+		GraficNodes[i - 1].image = al_load_bitmap(file.c_str());
+	}
+}
+
+void Drawer::unloadAssets()
+{
+	for (GraficNode& node : GraficNodes) 
+		al_destroy_bitmap(node.image);
 }
 
 void Drawer::DrawInformationWindows()
