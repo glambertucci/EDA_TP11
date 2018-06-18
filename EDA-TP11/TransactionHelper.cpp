@@ -2,9 +2,9 @@
 #define ERR -1
 
 int sum(vector<monl> casho);
-monl find(Node& nod, int index);
-int find(Node& nod);
-Output * find(Node& nod, unsigned int index);
+monl findMoneyIndex(Node& nod, int index);
+int findOnlyMoney(Node& nod);
+Output * findCorrectOutput(Node& nod, unsigned int index);
 
 
 
@@ -14,7 +14,7 @@ int addInput(Node& nod, Transaction &Tx, int cash)
 	vector<monl> cash_;
 	int vuelto;
 	do {
-		monl temp = find(nod, (int)index);
+		monl temp = findMoneyIndex(nod, (int)index);
 		if (temp.money > 0)
 		{
 			cash_.push_back(temp);
@@ -23,8 +23,8 @@ int addInput(Node& nod, Transaction &Tx, int cash)
 				for (int i = 0; i < cash_.size(); i++) {
 
 					Input temp_;
-					temp_.output = find(nod, (unsigned int)index);
-					temp_.signature = nod.sign(find(nod, index)->getGPString());
+					temp_.output = findCorrectOutput(nod, (unsigned int)index);
+					temp_.signature = nod.sign(findCorrectOutput(nod, index)->getGPString());
 					Tx.inputs.push_back(temp_);
 				}
 			}
@@ -54,7 +54,7 @@ bool hasFunds(Node& nod, int cash) {//Busca fondos en el vector de nodos hasta q
 	int mani = 0;
 	bool funds = false;
 	do {
-		mani += find(nod);
+		mani += findOnlyMoney(nod);
 		if (mani > -1) break;
 		if (mani >= cash)funds = true;
 	} while (mani < cash);
@@ -62,7 +62,7 @@ bool hasFunds(Node& nod, int cash) {//Busca fondos en el vector de nodos hasta q
 }
 
 
-monl find(Node& nod, int index) { //Find que devuelve monl;
+monl findMoneyIndex(Node& nod, int index) { //Find que devuelve monl;
 	unsigned int a = 0;//Osea devuelve la plata y el lugar donde esta la plata
 	monl retval = { ERR,ERR };
 	for (Transaction& trans : nod.getUTXO())
@@ -79,7 +79,7 @@ monl find(Node& nod, int index) { //Find que devuelve monl;
 	return  retval;
 }
 
-int find(Node& nod) {//Find que devuelve solo plata
+int findOnlyMoney(Node& nod) {//Find que devuelve solo plata
 	unsigned int money = 0;
 	for (Transaction & trans : nod.getUTXO()) {
 		if (trans.getoup().size() == 2) {
@@ -91,7 +91,7 @@ int find(Node& nod) {//Find que devuelve solo plata
 	}
 	return money;
 }
-Output * find(Node& nod, unsigned int index) {
+Output * findCorrectOutput(Node& nod, unsigned int index) {
 	unsigned int temp = 0;
 	for (Transaction& trans : nod.getUTXO()) {
 		if (trans.getoup().size() == 2) {

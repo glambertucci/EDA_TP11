@@ -28,9 +28,15 @@ public:
 	void checkTransaction(bool& ok, Transaction& Tx);
 	void addTransaction(Transaction &Tx);
 	void sendLastTransaction();
+	//Te devuelve la primera  transaccion sin verifiacr
+	Transaction * getUncheckedTransaction();
+	//Destruye la primer transaccion sin verificar
+	void destroyTransacction();
 
+	void sendLastBlock();
+	Block * getUncheckedBlock();
 	void recieveBlock(Block block);
-	void checkedBlock(bool& ok, Block& block);
+	void checkBlock(bool& ok, Block& block);
 	void addBlock(Block& block);
 
 

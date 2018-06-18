@@ -17,16 +17,17 @@ int main(int argc, char ** argv)
 	Drawer drawer(nodes);
 	ALLEGRO_DISPLAY * mainDisp = al_get_current_display();
 	AllegroDisplayFactory displayFactory;
-	AllegroKeyboardFactory keyboardFactory;
+	//AllegroKeyboardFactory keyboardFactory;
 	bool leave = false;
 	ALLEGRO_EVENT ev;
 	
-	WritableBox *cash = keyboardFactory.createWritableBox(KeyboardMode::Numeric, 0, 0, 15, 10, "font.ttf", "white");
+//	BoxyNox *cash = keyboardFactory.createWritableBox(KeyboardMode::Numeric, 0, 0, 15, 10, "font.ttf", "white");
 
 	while (!leave) {
 		if (al_get_next_event(allegro.getEventQueue(), &ev)) {
 			switch (ev.type) {
 			case ALLEGRO_EVENT_TIMER:
+				web.run();
 				al_set_target_backbuffer(mainDisp);
 				al_clear_to_color(al_color_name("black"));
 				drawer.Draw();
@@ -34,7 +35,7 @@ int main(int argc, char ** argv)
 				allegro.updateDisplay();
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
-				cash->input(ev);
+				//cash->input(ev);
 				break;
 			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
 				if (ev.mouse.display == mainDisp) {

@@ -37,12 +37,12 @@ Drawer::Drawer(vector<Node>& nodes)
 		gfNode.y = vertex[index+1];
 		index += 2;
 	}
-	this->loadAssets();
+	//this->loadAssets();
 }
 
 Drawer::~Drawer()
 {
-	this->unloadAssets();
+	//this->unloadAssets();
 	this->windows.clear();
 	this->GraficNodes.clear();
 }
@@ -141,8 +141,8 @@ void Drawer::Draw()
 	//}
 
 	for (GraficNode& gfNode : GraficNodes) {
-		al_draw_scaled_bitmap(gfNode.image, 0, 0, al_get_bitmap_width(gfNode.image), al_get_bitmap_height(gfNode.image), gfNode.x - RADIUS, gfNode.y - RADIUS, 2 * RADIUS, 2 * RADIUS, 0);
-		//al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS, al_color_name("hotpink"));
+		//al_draw_scaled_bitmap(gfNode.image, 0, 0, al_get_bitmap_width(gfNode.image), al_get_bitmap_height(gfNode.image), gfNode.x - RADIUS, gfNode.y - RADIUS, 2 * RADIUS, 2 * RADIUS, 0);
+		al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS, al_color_name("hotpink"));
 	}
 
 	//for (GraficNode& gfNode : GraficNodes) {

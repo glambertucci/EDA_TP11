@@ -34,7 +34,7 @@ public:
 				all.push_back(temp);
 			}
 		return temp;
-	}
+	};
 	void destroy(ALLEGRO_DISPLAY * display) { 
 		int i;
 		bool kill = false;
@@ -46,51 +46,26 @@ public:
 			all.erase(all.begin() + i);
 			al_destroy_display(display);
 		}
-	}
+	};
 
 private:
 	vector<ALLEGRO_DISPLAY *> all;
 };
 
-class AllegroKeyboardFactory
-{
-public:
-	AllegroKeyboardFactory()
-	{
-	}
-
-	~AllegroKeyboardFactory()
-	{
-		int i;
-		for (i = 0; i < boxes.size(); i++)
-			delete boxes[i];
-	}
-
-	
-	
-	
-	WritableBox * createWritableBox(int mode, float x_, float y_, unsigned int maxLenght, int fontSize_, const char * fontPath, const char * fontColor) {
-		WritableBox * temp = new WritableBox(mode, x_, y_, maxLenght, fontSize_, fontPath, fontColor);
-		boxes.push_back(temp);
-		return temp;
-	}
-
-	void destroy(WritableBox* box){
-		int i;
-		bool kill = false;
-		for (i = 0; i < boxes.size(); i++) {
-			if (boxes[i] == box)
-				kill = true;
-		}
-		if (kill) {
-			boxes.erase(boxes.begin() + i);
-			delete box;
-		}
-	}
-
-private:
-	vector<WritableBox*>boxes;
-};
+//class AllegroKeyboardFactory
+//{
+//public:
+//	AllegroKeyboardFactory(){}
+//
+//	~AllegroKeyboardFactory();
+//
+//	//BoxyNox * createWritableBox(int mode, float x_, float y_, unsigned int maxLenght, int fontSize_, const char * fontPath, const char * fontColor);
+//
+//	void destroy(BoxyNox* box);
+//
+//private:
+//	vector<BoxyNox*>boxes;
+//};
 
 
 

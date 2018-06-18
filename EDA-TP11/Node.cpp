@@ -29,6 +29,9 @@ void Node::checkTransaction(bool & ok, Transaction & Tx)
 		if (!ok)
 			break;
 	}
+	if (ok) {
+		addTransaction(Tx);
+	}
 }
 
 void Node::addTransaction(Transaction & Tx)
@@ -49,7 +52,28 @@ void Node::sendLastTransaction()
 	this->prev->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
 }
 
-void Node::checkedBlock(bool & ok, Block & block)
+Transaction * Node::getUncheckedTransaction()
+{
+	return &this->nonConfirmedTransactions.front();
+}
+
+void Node::destroyTransacction()
+{
+	this->nonConfirmedTransactions.pop();
+}
+
+void Node::sendLastBlock()
+{
+	this->prev->recieveBlock(actualBlock);
+	this->post->recieveBlock(actualBlock);
+}
+
+Block * Node::getUncheckedBlock()
+{
+	return &nonConfirmedBlock;
+}
+
+void Node::checkBlock(bool & ok, Block & block)
 {
 	bool TxOk = false;
 	stack<Transaction> transactInBlock = block.getBlock();
@@ -63,6 +87,8 @@ void Node::checkedBlock(bool & ok, Block & block)
 			return;
 		}
 	}
+	if (ok)
+		addBlock(block);
 }
 
 void Node::addBlock(Block & block)
@@ -80,12 +106,11 @@ bool Node::isMyPublicKey(ECDSA<ECP, SHA256>::PublicKey publicKey)
 }
 
 vector<byte>  Node::sign(string dataToSign) {
-	/*Se firmará un conjunto de datos de manera que cualquier usuario pueda verificar que la firma es válida*/
-	vector<byte> signature = getSignature(privateKey, dataToSign); //Firmamos un mensaje con la private key generada.
+	vector<byte> signature = getSignature(privateKey, dataToSign); 
 	return signature;
 
 }
 bool Node::checkSignature(vector<byte> sig,string dataToSign, ECDSA<ECP, SHA256>::PublicKey publicKey)
 {
-	return  verifySignature(publicKey, dataToSign, sig); //Cualquier podrá chequear la validez de la firma (checksig=true)
+	return  verifySignature(publicKey, dataToSign, sig); 
 }

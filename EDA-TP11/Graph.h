@@ -12,7 +12,7 @@ public:
 
 	void run();
 	void shuffleNodes();
-	void checkAndSendTransactions();
+	void checkAndSendTransactions();		
 	void checkAndSendBlocks();
 	void checkAndRecieveTransactions();
 	void checkAndRecieveBlocks();
