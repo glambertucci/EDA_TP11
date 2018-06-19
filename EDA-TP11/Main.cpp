@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
 	bool leave = false;
 	ALLEGRO_EVENT ev;
 	
-//	BoxyNox *cash = keyboardFactory.createWritableBox(KeyboardMode::Numeric, 0, 0, 15, 10, "font.ttf", "white");
+//	WritableBox *cash = keyboardFactory.createWritableBox(KeyboardMode::Numeric, 0, 0, 15, 10, "font.ttf", "white");
 
 	while (!leave) {
 		if (al_get_next_event(allegro.getEventQueue(), &ev)) {
