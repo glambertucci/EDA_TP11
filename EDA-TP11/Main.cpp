@@ -6,7 +6,7 @@
 
 int main(int argc, char ** argv) 
 {
-	AllegroClassV2 allegro(Allegro::InitMode::Full,2700,1500,60);
+	AllegroClassV2 allegro(Allegro::InitMode::Full,1900,1000,60);
 	//Parseo
 	int nodesQuantity = 10;
 
