@@ -39,7 +39,10 @@ private:
 
 class ImageAddon : public Addon {
 public:
-	ImageAddon() { if (al_init_image_addon()) this->initSuccess(); }
+	ImageAddon() {
+		if (al_init_image_addon())
+			this->initSuccess();
+	}
 	~ImageAddon() { al_shutdown_image_addon(); }
 };
 
