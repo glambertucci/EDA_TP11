@@ -128,9 +128,6 @@
     <ClCompile Include="Allegro\WritableBox.cpp">
       <Filter>Source Files\Allegro</Filter>
     </ClCompile>
-    <ClCompile Include="Allegro\AllegroFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

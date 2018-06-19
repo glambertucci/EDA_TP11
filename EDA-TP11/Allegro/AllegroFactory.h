@@ -1,6 +1,4 @@
 #pragma once
-#include "WritableBox.h"
-#include "WrittenBox.h"
 #include <string>
 #include <vector>
 
@@ -52,23 +50,6 @@ public:
 private:
 	vector<ALLEGRO_DISPLAY *> all;
 };
-
-class AllegroKeyboardFactory
-{
-public:
-	AllegroKeyboardFactory(){}
-
-	~AllegroKeyboardFactory();
-
-	WritableBox * createWritableBox(KeyboardMode mode, float x_, float y_, unsigned int maxLenght, int fontSize_, const char * fontPath, const char * fontColor);
-
-	void destroy(WritableBox* box);
-
-private:
-	vector<WritableBox*>boxes;
-};
-
-
 
 
 
