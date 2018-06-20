@@ -27,6 +27,10 @@ Graph::Graph(unsigned int node)
 
 void Graph::run()
 {
+	this->checkAndSendTransactions();
+	this->checkAndRecieveTransactions();
+	this->checkAndSendBlocks();
+	this->checkAndRecieveBlocks();
 
 }
 
@@ -65,9 +69,11 @@ void Graph::checkAndRecieveTransactions()
 {
 	for (Node& node : nodes) {
 		bool ok = false;
-		Transaction temp = *node.getUncheckedTransaction();
-		node.checkTransaction(ok, temp);
-		node.destroyTransacction();
+		Transaction * temp = node.getUncheckedTransaction();
+		if (temp != nullptr) {
+			node.checkTransaction(ok, *temp);
+			node.destroyTransacction();
+		}
 	}
 }
 
@@ -116,18 +122,20 @@ void correctGraph(Node * node,Node * prev, vector<Node>& nodes, vector<int>& che
 
 }
 
-void Graph::createTransaction(unsigned int source, unsigned int dest, unsigned int lukeDollars) {
-	if (hasFunds(this->nodes[source], (int)lukeDollars))
+bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollars) {
+	if (hasFunds(*source, (int)lukeDollars))
 	{
 		Transaction tx;
-		int vuelto = addInput(this->nodes[source],tx, lukeDollars);
+		int vuelto = addInput(*source,tx, lukeDollars);
 		if (vuelto > 0) {
-			addOutput(this->nodes[source],tx, vuelto);
+			addOutput(*source,tx, vuelto);
 		}
-		addOutput(this->nodes[dest], tx, lukeDollars);
+		addOutput(*dest, tx, lukeDollars);
 
-		nodes[source].recieveTransaction(tx);
+		source->recieveTransaction(tx);
+		return true;
 	}
+	return false;
 }
 
 Graph::~Graph()

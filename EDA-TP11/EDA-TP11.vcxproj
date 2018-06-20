@@ -153,6 +153,7 @@
     <ClInclude Include="Allegro\AllegroAddons.h" />
     <ClInclude Include="Allegro\AllegroClassV2.h" />
     <ClInclude Include="Allegro\AllegroFactory.h" />
+    <ClInclude Include="Allegro\AllegroWindow.h" />
     <ClInclude Include="Allegro\WritableBox.h" />
     <ClInclude Include="Allegro\WrittenBox.h" />
     <ClInclude Include="Block.h" />
@@ -169,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Allegro\AllegroClassV2.cpp" />
+    <ClCompile Include="Allegro\AllegroWindow.cpp" />
     <ClCompile Include="Allegro\WritableBox.cpp" />
     <ClCompile Include="Allegro\WrittenBox.cpp" />
     <ClCompile Include="Block.cpp" />

@@ -46,20 +46,26 @@ void Node::sendLastTransaction()
 		NO SE VA A LLAMAR A RECIEVE TRANS EN EL MAIN
 	*/
 
+	if (this->newTransactions.size() > 0) {
+		this->post->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
+		this->prev->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
+	}
 
 
-	this->post->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
-	this->prev->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
 }
 
 Transaction * Node::getUncheckedTransaction()
 {
-	return &this->nonConfirmedTransactions.front();
+	if (nonConfirmedTransactions.size() > 0)
+		return &this->nonConfirmedTransactions.front();
+	else
+		return nullptr;
 }
 
 void Node::destroyTransacction()
 {
-	this->nonConfirmedTransactions.pop();
+	if (nonConfirmedTransactions.size() > 0)
+		this->nonConfirmedTransactions.pop();
 }
 
 void Node::sendLastBlock()

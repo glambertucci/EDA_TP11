@@ -16,7 +16,7 @@ public:
 	void checkAndSendBlocks();
 	void checkAndRecieveTransactions();
 	void checkAndRecieveBlocks();
-	void createTransaction(unsigned int source, unsigned int dest, unsigned int lukeDollars);
+	bool createTransaction(Node* source, Node * dest, unsigned int lukeDollars);
 
 	void get_nodes(vector <Node>& nodes_) { nodes_ = this->nodes; };
 private:

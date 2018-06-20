@@ -2,10 +2,10 @@
 #include <vector>
 #include <math.h>
 #include "Allegro/AllegroClassV2.h"
-#include "Allegro/WrittenBox.h"
 #include "Node.h"
 #include <memory>
 #include <chrono>
+#include "Allegro/WrittenBox.h"
 
 #define DISTANCE_THRESHOLD (200)
 #define X_MAX_THRESHOLD (200)

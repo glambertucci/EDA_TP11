@@ -138,60 +138,70 @@ void AllegroClassV2::uninstallImageAddon()
 {
 	if (imageAddon != nullptr)
 		delete imageAddon;
+	imageAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallAudioAddon()
 {
 	if (audioAddon != nullptr)
 		delete audioAddon;
+	audioAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallFontAddon()
 {
 	if (fontAddon != nullptr)
 		delete fontAddon;
+	fontAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallKeyboardAddon()
 {
 	if (keyboardAddon != nullptr)
 		delete keyboardAddon;
+	keyboardAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallDisplayAddon()
 {
 	if (displayAddon != nullptr)
 		delete displayAddon;
+	displayAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallMouseAddon()
 {
 	if (mouseAddon != nullptr)
 		delete mouseAddon;
+	mouseAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallEventsAddon()
 {
 	if (eventsAddon != nullptr)
 		delete eventsAddon;
+	eventsAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallTimerAddon()
 {
 	if (timerAddon != nullptr)
 		delete timerAddon;
+	timerAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallPrimitivesAddon()
 {
 	if (primitivesAddon != nullptr)
 		delete primitivesAddon;
+	primitivesAddon = nullptr;
 }
 
 void AllegroClassV2::uninstallVideoAddon()
 {
 	if (videoAddon != nullptr)
 		delete videoAddon;
+	videoAddon = nullptr;
 }
 
 void AllegroClassV2::registerAllAvailableEventsSource()
@@ -257,6 +267,16 @@ void AllegroClassV2::setDisplayColor(ALLEGRO_COLOR color)
 void AllegroClassV2::setDisplayColor(const char * color)
 {
 	displayAddon->setDisplayColor(al_color_name(color));
+}
+
+void AllegroClassV2::setDisplayName(const char * name)
+{
+	al_set_window_title(displayAddon->getDisplay(), name);
+}
+
+void AllegroClassV2::setMainDisplay()
+{
+	al_set_target_backbuffer(this->displayAddon->getDisplay());
 }
 
 void AllegroClassV2::updateDisplay()

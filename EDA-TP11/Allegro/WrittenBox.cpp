@@ -71,7 +71,13 @@ bool WrittenBox::checkIfPressed(float x, float y)
 			if ((this->y <= y) && (y <= this->y + this->height))
 				pressed = true;
 	}
+	this->pressed = pressed;
 	return pressed;
+}
+
+bool WrittenBox::isPressed()
+{
+	return this->pressed;
 }
 
 WrittenBox::~WrittenBox()
@@ -80,6 +86,14 @@ WrittenBox::~WrittenBox()
 		al_destroy_bitmap(this->bitmap);
 	if (this->font)
 		al_destroy_font(this->font);
+}
+
+bool WrittenBox::operator==(WrittenBox & box)
+{
+	if (box.bitmap == this->bitmap)
+		return true;
+	else
+		return false;
 }
 
 void WrittenBox::draw()

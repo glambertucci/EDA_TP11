@@ -41,6 +41,7 @@ public:
 			if (all[i] == display)
 				kill = true;
 		}
+		i--;
 		if (kill) {
 			all.erase(all.begin() + i);
 			al_destroy_display(display);
@@ -51,7 +52,29 @@ private:
 	vector<ALLEGRO_DISPLAY *> all;
 };
 
+/*
+	Crea y decodifica colores de allegro
+*/
+class AllegroColorFactory
+{
+public:
+	AllegroColorFactory(){}
 
+	~AllegroColorFactory(){}
+
+	ALLEGRO_COLOR create(string color) { return al_color_name(color.c_str()); }
+	ALLEGRO_COLOR create(unsigned char r, unsigned char g, unsigned char b) { return al_map_rgb(r, g, b); }
+	ALLEGRO_COLOR create(unsigned char r, unsigned char g, unsigned char b, unsigned char a) { return al_map_rgba(r, g, b, a); }
+	void decode(ALLEGRO_COLOR& color, unsigned char&r, unsigned char & g, unsigned char & b) { al_unmap_rgb(color, &r, &g, &b); }
+	void decode(ALLEGRO_COLOR& color, unsigned char&r, unsigned char&g,unsigned char&b, unsigned char&a) { al_unmap_rgba(color, &r, &g, &b, &a); }
+
+private:
+
+};
+
+/*
+	Crea bitmaps
+*/
 
 class AllegroBitmapFactory
 {
@@ -66,24 +89,195 @@ public:
 			}
 		return temp;
 	}
-	void destroy(ALLEGRO_BITMAP * bmap) { al_destroy_bitmap(bmap); }
+	void destroy(ALLEGRO_BITMAP * bitmap) {
+		int i;
+		bool kill = false;
+		for (i = 0; i < all.size(); i++) {
+			if (all[i] == bitmap)
+				kill = true;
+		}
+		i--;
+		if (kill) {
+			all.erase(all.begin() + i);
+			al_destroy_bitmap(bitmap);
+		}
+	}
 
 private:
 	vector<ALLEGRO_BITMAP *> all;
 };
 
-enum class PrimitiveTypes
+// Dudo si esto deberia ser una factory o un tipo nuevo de dato
+class AllegroEventFactory
 {
-	Square,Rectangle,FilledRectangle, RoundedRectangle, Triangle, FilledTriangle, Ellipse, FilledEllipse, PieSlice, FilledPieSlice
+public:
+	AllegroEventFactory(ALLEGRO_EVENT_QUEUE* eventQueue) { this->eventQueue = eventQueue; }
+
+	~AllegroEventFactory() { for (ALLEGRO_EVENT_SOURCE* eventSource : sources) al_unregister_event_source(eventQueue, eventSource); }
+	void getEvent() { al_get_next_event(eventQueue, &ev); }
+	ALLEGRO_EVENT_TYPE getEventType() { return ev.type; }
+	ALLEGRO_DISPLAY_EVENT getDisplayEvent() { return ev.display; }
+	ALLEGRO_KEYBOARD_EVENT getKeyboardEvent() { return ev.keyboard; }
+	ALLEGRO_TIMER_EVENT getTimerEvent() { return ev.timer; }
+	ALLEGRO_MOUSE_EVENT getMouseEvent() { return ev.mouse; }
+	void registerEventSource(ALLEGRO_EVENT_SOURCE * eventSource) {
+		al_register_event_source(eventQueue, eventSource);
+		sources.push_back(eventSource);
+	}
+	void unregisterEventSource(ALLEGRO_EVENT_SOURCE* eventSource) {
+		int i;
+		bool kill = false;
+		for (i = 0; i < sources.size() && !kill; i++) {
+			if (sources[i] == eventSource)
+				kill = true;
+		}
+		i--;
+		if (kill) {
+			sources.erase(sources.begin() +i);
+			al_unregister_event_source(eventQueue, eventSource);
+		}
+	}
+ 
+private:
+	ALLEGRO_EVENT_QUEUE * eventQueue = nullptr;
+	ALLEGRO_EVENT ev;
+	vector<ALLEGRO_EVENT_SOURCE*>sources;
 };
+
+class AllegroFontFactory
+{
+public:
+	AllegroFontFactory()
+	{
+	}
+
+	~AllegroFontFactory() { for (ALLEGRO_FONT * font : all) al_destroy_font(font); }
+
+	ALLEGRO_FONT*create(string file, int size,bool automaticDestruction = true) {
+		ALLEGRO_FONT * temp = al_load_ttf_font(file.c_str(), -size, 0);
+		if (temp) {
+			if (automaticDestruction)
+				all.push_back(temp);
+		}
+		return temp;
+	}
+
+	void destroy(ALLEGRO_FONT * font) {
+		int i;
+		bool kill = false;
+		for (i = 0; i < all.size(); i++) {
+			if (all[i] == font)
+				kill = true;
+		}
+		i--;
+		if (kill) {
+			all.erase(all.begin() + i);
+			al_destroy_font(font);
+		}
+	}
+private:
+	vector<ALLEGRO_FONT *> all;
+};
+
+class AllegroTimerFactory
+{
+public:
+	AllegroTimerFactory(){}
+
+	~AllegroTimerFactory() { for (ALLEGRO_TIMER * timer : all) al_destroy_timer(timer); }
+	ALLEGRO_TIMER * create(float time, bool automaticDestruction = true) {
+		ALLEGRO_TIMER * temp = al_create_timer(time);
+		if (temp) {
+			if (automaticDestruction)
+				all.push_back(temp);
+			al_start_timer(temp);
+		}
+		return temp;
+	}
+
+	void destroy(ALLEGRO_TIMER * timer) {
+		int i;
+		bool kill = false;
+		for (i = 0; i < all.size(); i++) {
+			if (all[i] == timer)
+				kill = true;
+		}
+		i--;
+		if (kill) {
+			all.erase(all.begin() + i);
+			al_destroy_timer(timer);
+		}
+	}
+
+private:
+	vector<ALLEGRO_TIMER*>all;
+};
+
 
 class AllegroPrimitivesFactory
 {
 public:
 	AllegroPrimitivesFactory(){}
 
-	~AllegroPrimitivesFactory(){}
-	ALLEGRO_BITMAP * createCircle(float radius ,ALLEGRO_COLOR color,bool filled = true, float thickness = 0) {
+	~AllegroPrimitivesFactory(){
+		for (ALLEGRO_BITMAP * bitmap : all)
+			al_destroy_bitmap(bitmap);
+	}
+
+	ALLEGRO_BITMAP * createEllipse(float radiusX, float radiusY,ALLEGRO_COLOR color,bool filled = true, float thickness = 0, bool automaticDestruction = true) {
+		ALLEGRO_BITMAP * temp = al_create_bitmap(2* (radiusX+thickness), (radiusY + thickness) * 2);
+
+		if (temp) {
+			al_set_target_bitmap(temp);
+
+			if (filled)
+				al_draw_filled_ellipse(radiusX, radiusY, radiusX, radiusY, color);
+			else
+				al_draw_ellipse(radiusX+thickness, radiusY + thickness, radiusX, radiusY, color,thickness);
+			al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
+
+			if (automaticDestruction)
+				all.push_back(temp);
+		}
+		return temp;
+	}
+
+	ALLEGRO_BITMAP * createRoundedRectangle(float width, float height,float radius, ALLEGRO_COLOR color, bool filled = true, float thickness = 0, bool automaticDestruction = true) {
+		ALLEGRO_BITMAP * temp = al_create_bitmap(width, height);
+
+		if (temp) {
+			al_set_target_bitmap(temp);
+
+			if (filled)
+				al_draw_filled_rounded_rectangle(0, 0, width, height, radius, radius,color);
+			else
+				al_draw_rounded_rectangle(0, 0, width, height, radius, radius, color, thickness);
+			al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
+
+			if (automaticDestruction)
+				all.push_back(temp);
+		}
+		return temp;
+	}
+
+	ALLEGRO_BITMAP * createRectangle(float width, float height, ALLEGRO_COLOR color, bool filled = true, float thickness = 0, bool automaticDestruction = true) {
+		ALLEGRO_BITMAP * temp = al_create_bitmap(width, height);
+
+		if (temp) {
+			al_set_target_bitmap(temp);
+
+			if (filled)
+				al_draw_filled_rectangle(0, 0, width, height, color);
+			else
+				al_draw_rectangle(0, 0, width, height, color, thickness);
+			al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
+
+			if (automaticDestruction)
+				all.push_back(temp);
+		}
+	}
+
+	ALLEGRO_BITMAP * createCircle(float radius ,ALLEGRO_COLOR color,bool filled = true, float thickness = 0, bool automaticDestruction = true) {
 		ALLEGRO_BITMAP * temp = al_create_bitmap((radius+thickness) * 2, (radius + thickness) * 2);
 		if (temp) {
 			al_set_target_bitmap(temp);
@@ -92,11 +286,29 @@ public:
 			else
 				al_draw_circle((radius + thickness), (radius + thickness), radius, color, thickness);
 			al_set_target_bitmap(al_get_backbuffer(al_get_current_display()));
+			if (automaticDestruction)
+				all.push_back(temp);
 		}
 		return temp;
 	}
 
 
+	void destroy(ALLEGRO_BITMAP * bitmap) {
+		int i;
+		bool kill = false;
+		for (i = 0; i < all.size(); i++) {
+			if (all[i] == bitmap)
+				kill = true;
+		}
+		i--;
+		if (kill) {
+			all.erase(all.begin() + i);
+			al_destroy_bitmap(bitmap);
+		}
+	}
+
+
 private:
+	vector<ALLEGRO_BITMAP *> all;
 
 };

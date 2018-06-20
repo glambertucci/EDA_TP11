@@ -9,18 +9,16 @@ WritableBox::~WritableBox()
 {
 }
 
-void WritableBox::input(ALLEGRO_EVENT& ev)
+void WritableBox::input(ALLEGRO_KEYBOARD_EVENT ev)
 {
-	int character = ev.keyboard.unichar;
+	int character = ev.keycode;
 	if (text.length() < maxLenght) {
 		switch (mode) {
 		case KeyboardMode::Alphabetic:
 			addLowerCaseLetter(character);
-			addUpperCaseLetter(character);
 			break;
 		case KeyboardMode::Alphanumeric:
 			addLowerCaseLetter(character);
-			addUpperCaseLetter(character);
 			addNumber(character);
 			break;
 		case KeyboardMode::Numeric:
@@ -28,39 +26,30 @@ void WritableBox::input(ALLEGRO_EVENT& ev)
 			break;
 		}
 	}
-	deleteLetter(ev.keyboard.keycode);
+	deleteLetter(character);
 
-
+	this->setUp();
 }
 
-bool WritableBox::operator==(WritableBox & box)
-{
-	if (box.bitmap == this->bitmap)
-		return true;
-	else
-		return false;
-}
+
 
 void WritableBox::addNumber(int num)
 {
-	if (num >= '0' && num <= '9')
-		this->text += (char)num;
+	if (num >= ALLEGRO_KEY_0 && num <= ALLEGRO_KEY_9)
+		this->text += '0' + (num -ALLEGRO_KEY_0);
 }
 
 void WritableBox::addLowerCaseLetter(int let)
 {
-	if ('a' <= let && let <= 'z')
-		this->text += (char)let;
+	if (ALLEGRO_KEY_A <= let && let <= ALLEGRO_KEY_Z)
+		this->text += 'a' + (let - ALLEGRO_KEY_A);
+	else if (let == ALLEGRO_KEY_SPACE)
+		text += ' ';
 }
 
-void WritableBox::addUpperCaseLetter(int let)
-{
-	if ('A' <= let && let <= 'Z')
-		this->text += (char)let;
-}
 
 void WritableBox::deleteLetter(int let)
 {
-	if (let == ALLEGRO_KEY_DELETE)
+	if (let == ALLEGRO_KEY_BACKSPACE && text.size()>0)
 		text.pop_back();
 }
