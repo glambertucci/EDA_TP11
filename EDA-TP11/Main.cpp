@@ -94,7 +94,7 @@ int main(int argc, char ** argv)
 						if (temp != nullptr) {
 							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
 							nodeB = temp;
-							transactionWindow.addDrawing(drawer.getNodeBitmap(nodeB), 850, 100, 50, 50);
+							transactionWindow.addDrawing(drawer.getNodeBitmap(nodeB), 600, 100, 50, 50);
 						}
 					}
 					
