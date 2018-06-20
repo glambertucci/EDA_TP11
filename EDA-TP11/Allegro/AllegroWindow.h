@@ -1,5 +1,4 @@
 #pragma once
-#include "WrittenBox.h"
 #include <vector>
 #include <string>
 
@@ -7,7 +6,13 @@
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_image.h>
 
+struct Drawing
+{
+	ALLEGRO_BITMAP * bitmap;
+	float x, y;
+	float scaledHeight, scaledWidth, height, width;
 
+};
 
 using namespace std;
 
@@ -17,8 +22,9 @@ public:
 	AllegroWindow(float w, float h, string name = "", string icon = "");
 	~AllegroWindow();
 
-	void addBox(WrittenBox& box);
-	void removeBox(WrittenBox&box);
+	void addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight = 0, float scaledWidth = 0);
+	void removeDrawing(ALLEGRO_BITMAP *bitmap);
+	void moveDrawing(ALLEGRO_BITMAP *bitmapToMove, float newX, float newY);
 	void setAsMain();
 	void open();
 	void close();
@@ -35,7 +41,7 @@ public:
 
 private:
 	ALLEGRO_COLOR color;
-	vector<WrittenBox&>boxes;
+	vector<Drawing>drawings;
 	ALLEGRO_DISPLAY * display = nullptr;
 	ALLEGRO_BITMAP * icon = nullptr;
 	string name;

@@ -10,7 +10,7 @@
 
 int main(int argc, char ** argv) 
 {
-	AllegroClassV2 allegro(Allegro::InitMode::Full,1900,1000,60);
+	AllegroClassV2 allegro(Allegro::InitMode::Full,1900,1000,20);
 	//Parseo
 	int nodesQuantity = 10;
 
@@ -31,21 +31,21 @@ int main(int argc, char ** argv)
 
 	WrittenBox TransactionNodeA(200, 100, 100, 50, 20, "Source", "font.ttf", "black");
 	TransactionNodeA.TransformIntoButton("white", "black", 0);
-	transactionWindow.addBox(TransactionNodeA);
+	transactionWindow.addDrawing(TransactionNodeA.getBitmap(), TransactionNodeA.getX(), TransactionNodeA.getY());
 	Node * nodeA = nullptr;
 
 	WrittenBox TransactionNodeB(700, 100, 100, 50, 20, "Dest", "font.ttf","black");
 	TransactionNodeB.TransformIntoButton("white", "black", 0);
-	transactionWindow.addBox(TransactionNodeB);
+	transactionWindow.addDrawing(TransactionNodeB.getBitmap(), TransactionNodeB.getX(), TransactionNodeB.getY());
 	Node * nodeB = nullptr;
 
-	WritableBox cash(KeyboardMode::Numeric, 450, 400, 20, 20, "font.ttf", "black");
+	WritableBox cash(KeyboardMode::Numeric, 300, 400, 20, 20, "font.ttf", "black");
 	cash.setBackgroundColor("white");
-	transactionWindow.addBox(cash);
+	transactionWindow.addDrawing(cash.getBitmap(), cash.getX(), cash.getY());
 
-	WrittenBox confirmTransaction(400, 600, 200, 100, 30, "confirm Transaction", "font.ttf", "black");
+	WrittenBox confirmTransaction(100, 600, 800, 100, 30, "confirm Transaction", "font.ttf", "black");
 	confirmTransaction.TransformIntoButton("white", "black", 0);
-	transactionWindow.addBox(confirmTransaction);
+	transactionWindow.addDrawing(confirmTransaction.getBitmap(), confirmTransaction.getX(), confirmTransaction.getY());
 
 
 	while (!leave) {
@@ -53,9 +53,11 @@ int main(int argc, char ** argv)
 		switch (eventFactory.getEventType()) {
 		case ALLEGRO_EVENT_TIMER:
 			web.run();
-			transactionWindow.setAsMain();
-			transactionWindow.update();
-
+			if (transactionWindow.isOpen()) {
+				transactionWindow.setAsMain();
+				transactionWindow.update();
+			}
+			
 			allegro.setMainDisplay();
 			allegro.setDisplayColor("black");
 			drawer.Draw();
@@ -73,10 +75,29 @@ int main(int argc, char ** argv)
 			if (mouse.display == mainDisp) {
 				
 				if (transactionWindow.isOpen() && TransactionNodeA.isPressed()) {
-					nodeA = drawer.NodePressed(mouse.x, mouse.y)->node;
+					void * tt = drawer.NodePressed(mouse.x, mouse.y);
+					if (tt != nullptr) {
+						Node *temp = drawer.NodePressed(mouse.x, mouse.y)->node;
+
+						if (temp != nullptr) {
+							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
+							nodeA = temp;
+							transactionWindow.addDrawing(drawer.getNodeBitmap(nodeA), 350, 100, 50, 50);
+						}
+					}
 				}
 				else if (transactionWindow.isOpen() && TransactionNodeB.isPressed()) {
-					nodeB = drawer.NodePressed(mouse.x, mouse.y)->node;
+					void * tt = drawer.NodePressed(mouse.x, mouse.y);
+					if (tt != nullptr) {
+						Node *temp = drawer.NodePressed(mouse.x, mouse.y)->node;
+
+						if (temp != nullptr) {
+							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
+							nodeB = temp;
+							transactionWindow.addDrawing(drawer.getNodeBitmap(nodeB), 850, 100, 50, 50);
+						}
+					}
+					
 				}
 				else {
 					void * temp = drawer.NodePressed(mouse.x, mouse.y);
@@ -97,14 +118,17 @@ int main(int argc, char ** argv)
 				TransactionNodeA.checkIfPressed(mouse.x, mouse.y);
 				TransactionNodeB.checkIfPressed(mouse.x, mouse.y);
 				confirmTransaction.checkIfPressed(mouse.x, mouse.y);
+
 				if (confirmTransaction.isPressed() && nodeA != nullptr && nodeB != nullptr && cash.getText().size() > 0) {
 					if (web.createTransaction(nodeA, nodeB, atoi(cash.getText().c_str()))) {
 						eventFactory.unregisterEventSource(transactionWindow.getEventSource());
+						transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
+						transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
 						transactionWindow.close();
 						nodeA = nullptr;
 						nodeB = nullptr;
 					}
-					else cout << "Not enough funds";
+					else cout << "not enough funds";
 				}
 
 
@@ -116,6 +140,9 @@ int main(int argc, char ** argv)
 			ALLEGRO_DISPLAY_EVENT display = eventFactory.getDisplayEvent();
 			if (transactionWindow == display.source) {
 				eventFactory.unregisterEventSource(transactionWindow.getEventSource());
+				transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
+				transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
+				cash.clearText();
 				transactionWindow.close();
 				nodeA = nullptr;
 				nodeB = nullptr;
@@ -129,9 +156,5 @@ int main(int argc, char ** argv)
 			break;
 		}
 	}
-
-
-
-	
 }
 

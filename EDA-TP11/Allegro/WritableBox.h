@@ -19,7 +19,7 @@ public:
 	~WritableBox();
 	// Le pasas la parte de teclado del evento de allegro y va escribiendo. Se debe llamar cada vez que se presiona una tecla
 	void input(ALLEGRO_KEYBOARD_EVENT ev);
-
+	void clearText();
 	
 private:
 	void addNumber(int num);

@@ -55,6 +55,8 @@ public:
 	void updateInformationWindows();
 	// Dibuja los nodos
 	void Draw();
+
+	ALLEGRO_BITMAP * getNodeBitmap(Node *node);
 	
 private:
 	void loadAssets();

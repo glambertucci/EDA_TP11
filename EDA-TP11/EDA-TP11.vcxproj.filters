@@ -139,79 +139,79 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Faces\1.jpg">
+    <Image Include="Faces\1.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\2.jpg">
+    <Image Include="Faces\2.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\3.jpg">
+    <Image Include="Faces\3.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\4.jpg">
+    <Image Include="Faces\4.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\5.jpg">
+    <Image Include="Faces\5.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\6.jpg">
+    <Image Include="Faces\6.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\7.jpg">
+    <Image Include="Faces\7.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\8.jpg">
+    <Image Include="Faces\8.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\9.jpg">
+    <Image Include="Faces\9.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\10.jpg">
+    <Image Include="Faces\10.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\11.jpg">
+    <Image Include="Faces\11.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\12.jpg">
+    <Image Include="Faces\12.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\13.jpg">
+    <Image Include="Faces\13.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\14.jpg">
+    <Image Include="Faces\14.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\15.jpg">
+    <Image Include="Faces\15.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\16.jpg">
+    <Image Include="Faces\16.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\17.jpg">
+    <Image Include="Faces\17.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\18.jpg">
+    <Image Include="Faces\18.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\19.JPG">
+    <Image Include="Faces\19.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\20.jpg">
+    <Image Include="Faces\20.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\21.jpg">
+    <Image Include="Faces\21.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\22.jpg">
+    <Image Include="Faces\22.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\23.jpg">
+    <Image Include="Faces\23.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\24.jpg">
+    <Image Include="Faces\24.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Faces\25.jpg">
+    <Image Include="Faces\25.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

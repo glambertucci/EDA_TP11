@@ -36,7 +36,9 @@ public:
 	void draw();
 
 	bool operator==(WrittenBox&box);
-
+	ALLEGRO_BITMAP * getBitmap();
+	float getX();
+	float getY();
 	string getText() { return text; }
 	void setText(string text) { this->text = text; }
 protected:

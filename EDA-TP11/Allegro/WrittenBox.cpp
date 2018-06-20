@@ -96,6 +96,21 @@ bool WrittenBox::operator==(WrittenBox & box)
 		return false;
 }
 
+ALLEGRO_BITMAP * WrittenBox::getBitmap()
+{
+	return this->bitmap;
+}
+
+float WrittenBox::getX()
+{
+	return this->x;
+}
+
+float WrittenBox::getY()
+{
+	return this->y;
+}
+
 void WrittenBox::draw()
 {
 	al_draw_bitmap(this->bitmap,this->x,this->y,0);

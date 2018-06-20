@@ -161,17 +161,20 @@ void Drawer::Draw()
 	//}
 }
 
+ALLEGRO_BITMAP * Drawer::getNodeBitmap(Node * node)
+{
+	for (int i = 0; i < GraficNodes.size(); i++) {
+		if (GraficNodes[i].node == node) 
+			return GraficNodes[i].image;
+	}
+}
+
 void Drawer::loadAssets()
 {
-	//al_init();
-	//al_init_image_addon();
-	//al_init_acodec_addon();
+
 	for (int i = 1; i <= this->GraficNodes.size(); i++) {
 		string file = "Faces/" + to_string(i) + ".png";
 		GraficNodes[i - 1].image = al_load_bitmap(file.c_str());
-		//this->GraficNodes[i - 1].image = al_load_bitmap("Faces/1.png");
-		//ALLEGRO_BITMAP * bp=al_load_bitmap("1.png");
-		//int a = 2 + 2;
  	}
 }
 
