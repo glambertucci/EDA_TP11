@@ -6,6 +6,7 @@
 #include <memory>
 #include <chrono>
 #include "Allegro/WrittenBox.h"
+#include "Allegro/AllegroWindow.h"
 
 #define DISTANCE_THRESHOLD (200)
 #define X_MAX_THRESHOLD (200)

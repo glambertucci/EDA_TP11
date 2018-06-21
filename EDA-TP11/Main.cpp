@@ -5,6 +5,7 @@
 #include "Allegro/AllegroFactory.h"
 #include "Allegro/AllegroAddons.h"
 #include "Allegro/WritableBox.h"
+#include "GraphicHelper.h"
 
 #include "Graph.h"
 
@@ -74,31 +75,10 @@ int main(int argc, char ** argv)
 			ALLEGRO_MOUSE_EVENT mouse = eventFactory.getMouseEvent();
 			if (mouse.display == mainDisp) {
 				
-				if (transactionWindow.isOpen() && TransactionNodeA.isPressed()) {
-					void * tt = drawer.NodePressed(mouse.x, mouse.y);
-					if (tt != nullptr) {
-						Node *temp = drawer.NodePressed(mouse.x, mouse.y)->node;
-
-						if (temp != nullptr) {
-							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
-							nodeA = temp;
-							transactionWindow.addDrawing(drawer.getNodeBitmap(nodeA), 350, 100, 50, 50);
-						}
-					}
-				}
-				else if (transactionWindow.isOpen() && TransactionNodeB.isPressed()) {
-					void * tt = drawer.NodePressed(mouse.x, mouse.y);
-					if (tt != nullptr) {
-						Node *temp = drawer.NodePressed(mouse.x, mouse.y)->node;
-
-						if (temp != nullptr) {
-							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
-							nodeB = temp;
-							transactionWindow.addDrawing(drawer.getNodeBitmap(nodeB), 600, 100, 50, 50);
-						}
-					}
-					
-				}
+				if (transactionWindow.isOpen() && TransactionNodeA.isPressed()) 
+					getNodeForTransaction(nodeA, drawer, transactionWindow, TransactionNodeA, mouse);
+				else if (transactionWindow.isOpen() && TransactionNodeB.isPressed()) 
+					getNodeForTransaction(nodeB, drawer, transactionWindow, TransactionNodeB, mouse);
 				else {
 					void * temp = drawer.NodePressed(mouse.x, mouse.y);
 					if (temp) {
@@ -107,10 +87,8 @@ int main(int argc, char ** argv)
 						drawer.createInformationWindow(tempDisp, temp);
 					}
 					else {
-						if (makeTrans.checkIfPressed(mouse.x, mouse.y)) {
-							transactionWindow.open();
-							eventFactory.registerEventSource(transactionWindow.getEventSource());
-						}
+						if (makeTrans.checkIfPressed(mouse.x, mouse.y))
+							openWindow(transactionWindow, eventFactory);
 					}
 				}
 			}
@@ -121,10 +99,10 @@ int main(int argc, char ** argv)
 
 				if (confirmTransaction.isPressed() && nodeA != nullptr && nodeB != nullptr && cash.getText().size() > 0) {
 					if (web.createTransaction(nodeA, nodeB, atoi(cash.getText().c_str()))) {
-						eventFactory.unregisterEventSource(transactionWindow.getEventSource());
 						transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
 						transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
 						transactionWindow.close();
+						cash.clearText();
 						nodeA = nullptr;
 						nodeB = nullptr;
 					}
@@ -139,13 +117,12 @@ int main(int argc, char ** argv)
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
 			ALLEGRO_DISPLAY_EVENT display = eventFactory.getDisplayEvent();
 			if (transactionWindow == display.source) {
-				eventFactory.unregisterEventSource(transactionWindow.getEventSource());
 				transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
 				transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
 				cash.clearText();
-				transactionWindow.close();
 				nodeA = nullptr;
 				nodeB = nullptr;
+				closeWindow(transactionWindow, eventFactory);
 			}
 			else if (display.source != mainDisp) {
 				eventFactory.unregisterEventSource(al_get_display_event_source(display.source));

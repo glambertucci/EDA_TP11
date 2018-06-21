@@ -17,6 +17,8 @@ typedef struct textData
 class WrittenBox
 {
 public:
+	WrittenBox(float x_, float y_, float width_, float height_, string text_, ALLEGRO_FONT * font, const char * fontColor);
+
 	WrittenBox(float x_, float y_, float width_, float height_, int fontSize_, string text_, const char * fontPath, const char * fontColor);
 	// Cambia el color de fondo del cuadro de texto
 	void setBackgroundColor(const char * color);
@@ -34,6 +36,7 @@ public:
 	~WrittenBox();
 	// Dibuja al cuadro de texto
 	void draw();
+	void unpressButton();
 
 	bool operator==(WrittenBox&box);
 	ALLEGRO_BITMAP * getBitmap();

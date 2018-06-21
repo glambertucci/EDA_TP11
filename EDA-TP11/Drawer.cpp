@@ -58,32 +58,26 @@ void Drawer::createInformationWindow(ALLEGRO_DISPLAY * displ, void * node)
 	float yOffset = 50;
 	int i = -1;
 	float boxHeight = 50;
-	shared_ptr<WrittenBox> PublicKey(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Private Key:", "font.ttf", "white"))
-		, PrivateKey(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Public Key:", "font.ttf", "white"))
-		, NodeType(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Node Type:", "font.ttf", "white"))
-		, Money(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Money:", "font.ttf", "white"))
-		, Transacction(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Make Transaction", "font.ttf", "white"))
-		, FakeTransaction(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Make Fake Transaction", "font.ttf", "white"));
+	shared_ptr<WrittenBox> PublicKey(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Private Key:", "font.ttf", "white"))
+		, PrivateKey(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Public Key:", "font.ttf", "white"))
+		, NodeType(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Node Type:", "font.ttf", "white"));
+		//, Money(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Money:", "font.ttf", "white"))
 
-	Transacction->TransformIntoButton("green", nullptr, 0);
 	temp->titles.push_back(PrivateKey);
 	temp->titles.push_back(PublicKey);
 	temp->titles.push_back(NodeType);
-	temp->titles.push_back(Money);
-	temp->titles.push_back(Transacction);
-	temp->titles.push_back(FakeTransaction);
+//	temp->titles.push_back(Money);
 	i = 0;
 
-	//shared_ptr<WrittenBox> PublicKeyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, to_string(temp->graficNode->node->getpkey()), "font.ttf", "white"))
-	shared_ptr<WrittenBox> PublicKeyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, to_string(temp->graficNode->node->getNum()), "font.ttf", "white")) //DEBUG
-		, PrivateKeyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "", "font.ttf", "white"))
-		, nodeTypeValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Miner", "font.ttf", "white"))
-		, MoneyValue(new WrittenBox(xOffset, yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "0", "font.ttf", "white"))
+	shared_ptr<WrittenBox> PublicKeyValue(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,"", "font.ttf", "white")) //DEBUG
+		, PrivateKeyValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "", "font.ttf", "white"))
+		, nodeTypeValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Miner", "font.ttf", "white"))
+		//, MoneyValue(new WrittenBox(xOffset,100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "0", "font.ttf", "white"))
 		;
 	temp->values.push_back(PublicKeyValue);
 	temp->values.push_back(PrivateKeyValue);
 	temp->values.push_back(nodeTypeValue);
-	temp->values.push_back(MoneyValue);
+	//temp->values.push_back(MoneyValue);
 
 	this->windows.push_back(temp);
 }
@@ -192,6 +186,10 @@ void Drawer::DrawInformationWindows()
 	for (shared_ptr< NodeInfo>& nodeInfo : this->windows) {
 		al_set_target_backbuffer(nodeInfo->display);
 		al_clear_to_color(al_color_name("black"));
+		float imageW = al_get_bitmap_width(nodeInfo->graficNode->image);
+		float imageH = al_get_bitmap_height(nodeInfo->graficNode->image);
+
+		al_draw_scaled_bitmap(nodeInfo->graficNode->image, 0, 0, imageW, imageH,-50 + al_get_display_width(nodeInfo->display)/2, 50, 100, 100, 0);
 
 		for (shared_ptr<WrittenBox>& wbox : nodeInfo->titles)
 			wbox->draw();
@@ -204,13 +202,14 @@ void Drawer::DrawInformationWindows()
 
 void Drawer::updateInformationWindows()
 {
-	for (shared_ptr< NodeInfo>& nodeInfo : this->windows) {
-		string publicKey = to_string(nodeInfo->graficNode->node->getNum());  //DEBUG
-		string OldPublickKey = nodeInfo->values[0]->getText();
-		if (publicKey.compare(OldPublickKey))
-			nodeInfo->values[0]->setText(publicKey);
-		// Hay que hacer lo mismo para todo lo demas, pero no tengo las funciones aca.
-	}
+	//for (shared_ptr< NodeInfo>& nodeInfo : this->windows) {
+	//	string publicKey = to_string(nodeInfo->graficNode->node->getNum());  //DEBUG
+	//	string OldPublickKey = nodeInfo->values[0]->getText();
+
+	//	if (publicKey.compare(OldPublickKey))
+	//		nodeInfo->values[0]->setText(publicKey);
+	//	// Hay que hacer lo mismo para todo lo demas, pero no tengo las funciones aca.
+	//}
 }
 
 void Drawer::linkVertexAndNode(vector<Node>& nodes)

@@ -21,7 +21,6 @@ class AllegroWindow
 public:
 	AllegroWindow(float w, float h, string name = "", string icon = "");
 	~AllegroWindow();
-
 	void addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight = 0, float scaledWidth = 0);
 	void removeDrawing(ALLEGRO_BITMAP *bitmap);
 	void moveDrawing(ALLEGRO_BITMAP *bitmapToMove, float newX, float newY);
