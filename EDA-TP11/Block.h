@@ -11,6 +11,10 @@ public:
 	Block();
 	~Block();
 	stack <Transaction> getBlock() { return block; }
+	uint32_t getNumber() { return number; }
+	uint32_t getTimeStamp() { return timestamp; }
+	uint32_t getNonce() { return nonce; }
+
 private:
 	stack <Transaction> block;
 	//CryptoPP::SHA256 previusBlock;
