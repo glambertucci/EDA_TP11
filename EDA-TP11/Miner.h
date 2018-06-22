@@ -9,7 +9,7 @@ public:
 		this->post = nullptr;
 		this->prev = nullptr;
 	}
-	void recieveTransaction(Transaction Tx, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
+	void mining(Transaction Tx, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA256> publicKey);
 
 	~Miner();
 };

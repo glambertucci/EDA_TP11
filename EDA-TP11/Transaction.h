@@ -14,7 +14,7 @@ public:
 	vector <Input> getinp() { return this->inputs; }
 	vector <Output> getoup() { return this->outputs; }
 	~Transaction();
-	/*CryptoPP::SHA256 hashID;*/
+	CryptoPP::SHA256 hashID;
 	vector <Input> inputs;
 	vector <Output> outputs;
 };

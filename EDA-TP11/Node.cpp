@@ -111,12 +111,12 @@ bool Node::isMyPublicKey(ECDSA<ECP, SHA256>::PublicKey publicKey)
 	return this->checkSignature(signature,hashCheck,publicKey);
 }
 
-vector<byte>  Node::sign(string dataToSign) {
+vector<byte> Node::sign(string dataToSign) {
 	vector<byte> signature = getSignature(privateKey, dataToSign); 
 	return signature;
 
 }
 bool Node::checkSignature(vector<byte> sig,string dataToSign, ECDSA<ECP, SHA256>::PublicKey publicKey)
 {
-	return  verifySignature(publicKey, dataToSign, sig); 
+	return verifySignature(publicKey, dataToSign, sig); 
 }

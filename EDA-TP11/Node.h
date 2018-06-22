@@ -19,8 +19,6 @@ using namespace std;
 
 class Node
 {
-
-	
 public:
 	Node(int a);
 	~Node();
