@@ -47,6 +47,7 @@ void Node::sendLastTransaction()
 	*/
 
 	if (this->newTransactions.size() > 0) {
+		
 		this->post->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
 		this->prev->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
 	}
@@ -70,6 +71,7 @@ void Node::destroyTransacction()
 
 void Node::sendLastBlock()
 {
+	//blockTimestamp = chrono::high_resolution_clock::now();
 	this->prev->recieveBlock(actualBlock);
 	this->post->recieveBlock(actualBlock);
 }
@@ -119,4 +121,9 @@ vector<byte> Node::sign(string dataToSign) {
 bool Node::checkSignature(vector<byte> sig,string dataToSign, ECDSA<ECP, SHA256>::PublicKey publicKey)
 {
 	return verifySignature(publicKey, dataToSign, sig); 
+}
+
+void Node::setTransactionTimestamp()
+{
+	transactionTimestamp = chrono::high_resolution_clock::now();
 }

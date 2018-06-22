@@ -1,17 +1,13 @@
 #include "GraphicHelper.h"
 
-void getNodeForTransaction(Node * node, Drawer & drawer, AllegroWindow & transactionWindow, WrittenBox& transactionNode, ALLEGRO_MOUSE_EVENT& mouse)
+void getNodeForTransaction(Node ** node, Drawer & drawer, AllegroWindow & transactionWindow, WrittenBox& transactionNode, ALLEGRO_MOUSE_EVENT& mouse)
 {
 	void * tt = drawer.NodePressed(mouse.x, mouse.y);
 	if (tt != nullptr) {
-		Node *temp = drawer.NodePressed(mouse.x, mouse.y)->node;
-
-		if (temp != nullptr) {
-			transactionWindow.removeDrawing(drawer.getNodeBitmap(node));
-			node = temp;
-			transactionWindow.addDrawing(drawer.getNodeBitmap(node), 350, 100, 50, 50);
+			transactionWindow.removeDrawing(drawer.getNodeBitmap(*node));
+			*node = drawer.NodePressed(mouse.x, mouse.y)->node;
+			transactionWindow.addDrawing(drawer.getNodeBitmap(*node), transactionNode.getX()+150, transactionNode.getY(), 50, 50);
 			transactionNode.unpressButton();
-		}
 	}
 }
 

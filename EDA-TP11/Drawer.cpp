@@ -80,6 +80,8 @@ void Drawer::createInformationWindow(ALLEGRO_DISPLAY * displ, void * node)
 	//temp->values.push_back(MoneyValue);
 
 	this->windows.push_back(temp);
+	// DEBUG
+	temp->graficNode->node->setTransactionTimestamp();
 }
 
 GraficNode * Drawer::NodePressed(int x, int y)
@@ -117,42 +119,64 @@ void Drawer::Draw()
 		al_draw_line(gfNode.x, gfNode.y, gfNode.post->x, gfNode.post->y, al_color_name("blue"), 3.0);
 	}
 
-	/// NO BORRAR EL CODIGO COMENTADO DE ESTA FUNCION
+	for (GraficNode& gfNode : GraficNodes) {
+		chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
+		if ((timePassed.count()) > 0 && (timePassed.count()) <= (3 )) {
+			float increaseFactor = timePassed.count() * 1000;
+
+			increaseFactor = ((-8 * increaseFactor) / (3000.0)) + 8;
 
 
-	//for (GraficNode& gfNode : GraficNodes) {
-	//	//chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
-	//	//if ((timePassed.count() * 1000) > 0 && (timePassed.count() * 1000) <= (3 * 1000 * 1000)) {
-	//		//float increaseFactor = timePassed.count() * 1000;
+			al_draw_line(gfNode.x, gfNode.y, gfNode.post->x, gfNode.post->y, al_color_name("green"), 3.0 + increaseFactor);
+			al_draw_line(gfNode.x, gfNode.y, gfNode.prev->x, gfNode.prev->y, al_color_name("green"), 3.0 + increaseFactor);
 
-	//		//increaseFactor = ((-8 * increaseFactor) / (3000.0)) + 8;
+		}
+	}
+
+	for (GraficNode& gfNode : GraficNodes) {
+		chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getBlockTimestamp();
+		if ((timePassed.count()) > 0 && (timePassed.count()) <= (3)) {
+			float increaseFactor = timePassed.count() * 1000;
+
+			increaseFactor = ((-8 * increaseFactor) / (3000.0)) + 8;
 
 
-	//		//al_draw_line(gfNode.x, gfNode.y, gfNode.post->x, gfNode.post->y, al_color_name("green"), 3.0 + increaseFactor);
-	//		//al_draw_line(gfNode.x, gfNode.y, gfNode.prev->x, gfNode.prev->y, al_color_name("green"), 3.0 + increaseFactor);
+			al_draw_line(gfNode.x, gfNode.y, gfNode.post->x, gfNode.post->y, al_color_name("Hotpink"), 3.0 + increaseFactor);
+			al_draw_line(gfNode.x, gfNode.y, gfNode.prev->x, gfNode.prev->y, al_color_name("Hotpink"), 3.0 + increaseFactor);
 
-	//	}
-	//}
+		}
+	}
 
 	for (GraficNode& gfNode : GraficNodes) {
 		al_draw_scaled_bitmap(gfNode.image, 0, 0, al_get_bitmap_width(gfNode.image), al_get_bitmap_height(gfNode.image), gfNode.x - RADIUS, gfNode.y - RADIUS, 2 * RADIUS, 2 * RADIUS, 0);
-		//al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS, al_color_name("hotpink"));
 	}
 
-	//for (GraficNode& gfNode : GraficNodes) {
+	for (GraficNode& gfNode : GraficNodes) {
 
-	//	chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
-	//	if ((timePassed.count() * 1000) > 0 && (timePassed.count() * 1000) <= (3 * 1000 * 1000)) {
-	//		float increaseFactor = timePassed.count() * 1000;
+		chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
+		if ((timePassed.count()) > 0 && (timePassed.count()) <= (3 )) {
+			float increaseFactor = timePassed.count() * 1000;
 
-	//		increaseFactor = ((-15 * increaseFactor) / (3000.0)) + 15;
+			increaseFactor = ((-15 * increaseFactor) / (3000.0)) + 15;
 
+			al_draw_scaled_bitmap(gfNode.image, 0, 0, al_get_bitmap_width(gfNode.image), al_get_bitmap_height(gfNode.image), gfNode.x - RADIUS - increaseFactor, gfNode.y - RADIUS - increaseFactor, 2 * (RADIUS + increaseFactor), 2 * (RADIUS + increaseFactor), 0);
 
-	//		al_draw_filled_circle(gfNode.x, gfNode.y, RADIUS + increaseFactor, al_color_name("hotpink"));
+		}
+		
+	}
+	for (GraficNode& gfNode : GraficNodes) {
 
-	//	}
-	//	
-	//}
+		chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getBlockTimestamp();
+		if ((timePassed.count()) > 0 && (timePassed.count()) <= (3)) {
+			float increaseFactor = timePassed.count() * 1000;
+
+			increaseFactor = ((-15 * increaseFactor) / (3000.0)) + 15;
+
+			al_draw_scaled_bitmap(gfNode.image, 0, 0, al_get_bitmap_width(gfNode.image), al_get_bitmap_height(gfNode.image), gfNode.x - RADIUS - increaseFactor, gfNode.y - RADIUS - increaseFactor, 2 * (RADIUS + increaseFactor), 2 * (RADIUS + increaseFactor), 0);
+
+		}
+
+	}
 }
 
 ALLEGRO_BITMAP * Drawer::getNodeBitmap(Node * node)

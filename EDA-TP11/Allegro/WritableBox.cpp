@@ -34,6 +34,7 @@ void WritableBox::input(ALLEGRO_KEYBOARD_EVENT ev)
 void WritableBox::clearText()
 {
 	this->text = "";
+	this->setUp();
 }
 
 

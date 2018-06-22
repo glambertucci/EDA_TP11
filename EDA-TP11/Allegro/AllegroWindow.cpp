@@ -122,9 +122,26 @@ void AllegroWindow::setIcon(string icon)
 	this->icon = al_load_bitmap(icon.c_str());
 }
 
+void AllegroWindow::resize(float newW, float newH)
+{
+	this->width = newW;
+	this->height = newH;
+	al_resize_display(this->display, newW, newH);
+}
+
 bool AllegroWindow::isOpen()
 {
 	return on;
+}
+
+float AllegroWindow::getWidth()
+{
+	return this->width;
+}
+
+float AllegroWindow::getHeight()
+{
+	return this->height;
 }
 
 ALLEGRO_EVENT_SOURCE * AllegroWindow::getEventSource()

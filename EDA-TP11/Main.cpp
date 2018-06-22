@@ -11,7 +11,7 @@
 
 int main(int argc, char ** argv) 
 {
-	AllegroClassV2 allegro(Allegro::InitMode::Full,1900,1000,20);
+	AllegroClassV2 allegro(Allegro::InitMode::Full,1900,1000,10);
 	//Parseo
 	int nodesQuantity = 10;
 
@@ -24,9 +24,13 @@ int main(int argc, char ** argv)
 	AllegroDisplayFactory displayFactory;
 	AllegroEventFactory eventFactory(allegro.getEventQueue());
 	bool leave = false;
+	bool trueTransaction;
 
-	WrittenBox makeTrans(0, 0, 200, 50, 20, "Make Transaction", "font.ttf", "black");
+	WrittenBox makeTrans(0, 0, 300, 50, 20, "Make Transaction", "font.ttf", "black");
 	makeTrans.TransformIntoButton("white", "green", 5);
+
+	WrittenBox makeFakeTrans(al_get_display_width(al_get_current_display()) - 300, 0, 300, 50, 20, "Make Fake Transaction", "font.ttf", "black");
+	makeFakeTrans.TransformIntoButton("white", "green", 5);
 
 	AllegroWindow transactionWindow(1000, 800,"Transaction Manager");
 
@@ -63,6 +67,7 @@ int main(int argc, char ** argv)
 			allegro.setDisplayColor("black");
 			drawer.Draw();
 			makeTrans.draw();
+			makeFakeTrans.draw();
 			drawer.DrawInformationWindows();
 			allegro.updateDisplay();
 
@@ -75,10 +80,13 @@ int main(int argc, char ** argv)
 			ALLEGRO_MOUSE_EVENT mouse = eventFactory.getMouseEvent();
 			if (mouse.display == mainDisp) {
 				
-				if (transactionWindow.isOpen() && TransactionNodeA.isPressed()) 
-					getNodeForTransaction(nodeA, drawer, transactionWindow, TransactionNodeA, mouse);
-				else if (transactionWindow.isOpen() && TransactionNodeB.isPressed()) 
-					getNodeForTransaction(nodeB, drawer, transactionWindow, TransactionNodeB, mouse);
+				if (transactionWindow.isOpen() && TransactionNodeA.isPressed()) {
+					getNodeForTransaction(&nodeA, drawer, transactionWindow, TransactionNodeA, mouse);
+				}
+				else if (transactionWindow.isOpen() && TransactionNodeB.isPressed()) {
+					getNodeForTransaction(&nodeB, drawer, transactionWindow, TransactionNodeB, mouse);
+
+				}
 				else {
 					void * temp = drawer.NodePressed(mouse.x, mouse.y);
 					if (temp) {
@@ -87,8 +95,18 @@ int main(int argc, char ** argv)
 						drawer.createInformationWindow(tempDisp, temp);
 					}
 					else {
-						if (makeTrans.checkIfPressed(mouse.x, mouse.y))
+						if (makeTrans.checkIfPressed(mouse.x, mouse.y)) {
+							trueTransaction = true;
+							transactionWindow.setName("Transaction");
 							openWindow(transactionWindow, eventFactory);
+							makeTrans.unpressButton();
+						}
+						else if (makeFakeTrans.checkIfPressed(mouse.x, mouse.y)) {
+							trueTransaction = false;
+							transactionWindow.setName("Fake Transaction");
+							openWindow(transactionWindow, eventFactory);
+							makeFakeTrans.unpressButton();
+						}
 					}
 				}
 			}
@@ -96,17 +114,22 @@ int main(int argc, char ** argv)
 				TransactionNodeA.checkIfPressed(mouse.x, mouse.y);
 				TransactionNodeB.checkIfPressed(mouse.x, mouse.y);
 				confirmTransaction.checkIfPressed(mouse.x, mouse.y);
-
-				if (confirmTransaction.isPressed() && nodeA != nullptr && nodeB != nullptr && cash.getText().size() > 0) {
-					if (web.createTransaction(nodeA, nodeB, atoi(cash.getText().c_str()))) {
-						transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
-						transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
-						transactionWindow.close();
-						cash.clearText();
-						nodeA = nullptr;
-						nodeB = nullptr;
+				if (confirmTransaction.isPressed()) {
+					if (nodeA != nullptr && nodeB != nullptr && cash.getText().size() > 0) {
+						if (web.createTransaction(nodeA, nodeB, atoi(cash.getText().c_str()), trueTransaction)) {
+							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
+							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
+							transactionWindow.close();
+							TransactionNodeB.unpressButton();
+							TransactionNodeA.unpressButton();
+							cash.clearText();
+							nodeA = nullptr;
+							nodeB = nullptr;
+						}
+						else cout << "not enough funds";
 					}
-					else cout << "not enough funds";
+					else
+						confirmTransaction.unpressButton();
 				}
 
 
@@ -120,6 +143,8 @@ int main(int argc, char ** argv)
 				transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
 				transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
 				cash.clearText();
+				TransactionNodeB.unpressButton();
+				TransactionNodeA.unpressButton();
 				nodeA = nullptr;
 				nodeB = nullptr;
 				closeWindow(transactionWindow, eventFactory);

@@ -43,8 +43,12 @@ WrittenBox::WrittenBox(float x_, float y_, float width_, float height_, int font
 
 void WrittenBox::setBackgroundColor(const char * color )
 {
-	if (color != nullptr)
+	if (color != nullptr) {
 		this->backgroundColor = al_color_name(color);
+		unsigned char r, g, b;
+		al_unmap_rgb(this->backgroundColor, &r, &g, &b);
+		this->pressedColor = al_map_rgb((r > 50) ? r - 50 : r, (g > 50) ? g - 50 : g, (b > 50) ? b - 50 : b);
+	}
 	else
 		this->backgroundColor = al_map_rgba(0, 0, 0, 0);
 	this->setUp();
@@ -88,6 +92,12 @@ bool WrittenBox::checkIfPressed(float x, float y)
 			if ((this->y <= y) && (y <= (this->y + this->height)))
 				this->pressed = true;
 		
+	}
+	if (pressed) {
+		ALLEGRO_COLOR temp = backgroundColor;
+		backgroundColor = pressedColor;
+		pressedColor = temp;
+		this->setUp();
 	}
 
 	return this->pressed;
@@ -137,6 +147,10 @@ void WrittenBox::draw()
 void WrittenBox::unpressButton()
 {
 	this->pressed = false;
+	ALLEGRO_COLOR temp = pressedColor;
+	pressedColor = backgroundColor;
+	backgroundColor = temp;
+	setUp();
 }
 
 void WrittenBox::setUp()

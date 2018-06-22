@@ -122,20 +122,25 @@ void correctGraph(Node * node,Node * prev, vector<Node>& nodes, vector<int>& che
 
 }
 
-bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollars) {
-	if (hasFunds(*source, (int)lukeDollars))
-	{
-		Transaction tx;
-		int vuelto = addInput(*source,tx, lukeDollars);
-		if (vuelto > 0) {
-			addOutput(*source,tx, vuelto);
-		}
-		addOutput(*dest, tx, lukeDollars);
+bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollars, bool realTrans) {
+	if (realTrans) {
+		if (hasFunds(*source, (int)lukeDollars))
+		{
+			Transaction tx;
+			int vuelto = addInput(*source, tx, lukeDollars);
+			if (vuelto > 0) {
+				addOutput(*source, tx, vuelto);
+			}
+			addOutput(*dest, tx, lukeDollars);
 
-		source->recieveTransaction(tx);
-		return true;
+			source->recieveTransaction(tx);
+			return true;
+		}
+		return false;
 	}
-	return false;
+	else {
+
+	}
 }
 
 Graph::~Graph()

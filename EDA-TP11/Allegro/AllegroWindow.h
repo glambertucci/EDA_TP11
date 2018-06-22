@@ -24,6 +24,7 @@ public:
 	void addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight = 0, float scaledWidth = 0);
 	void removeDrawing(ALLEGRO_BITMAP *bitmap);
 	void moveDrawing(ALLEGRO_BITMAP *bitmapToMove, float newX, float newY);
+
 	void setAsMain();
 	void open();
 	void close();
@@ -32,7 +33,10 @@ public:
 	void setName(string name);
 	void setIcon(string icon);
 
+	void resize(float newW, float newH);
 	bool isOpen();
+	float getWidth();
+	float getHeight();
 
 	ALLEGRO_EVENT_SOURCE * getEventSource();
 

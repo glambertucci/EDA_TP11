@@ -53,6 +53,7 @@ protected:
 	ALLEGRO_BITMAP * bitmap;
 	ALLEGRO_COLOR fontColor;
 	ALLEGRO_COLOR backgroundColor;
+	ALLEGRO_COLOR pressedColor;
 	ALLEGRO_COLOR borderColor;
 	float borderThickness;
 	float x;

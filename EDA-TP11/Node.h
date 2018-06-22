@@ -2,6 +2,7 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <chrono>
 
 #include "CryptoHelper.h"
 
@@ -14,6 +15,7 @@
 
 #include "Transaction.h"
 #include "Block.h"
+
 
 using namespace std;
 
@@ -50,6 +52,10 @@ public:
 	void setPrevNode(Node* node) { this->prev = node; }
 	Node * getNextNode() { return post; }
 	Node * getPrevNode() { return prev; }
+
+	void setTransactionTimestamp();
+	chrono::high_resolution_clock::time_point getTransactionTimeStamp() { return transactionTimestamp; }
+	chrono::high_resolution_clock::time_point getBlockTimestamp() { return blockTimestamp; }
 protected:
 	int num;
 	Node * prev, *post;
@@ -62,5 +68,6 @@ protected:
 	bool miner;
 	Block actualBlock;
 	Block nonConfirmedBlock;
+	chrono::high_resolution_clock::time_point transactionTimestamp,blockTimestamp;
 };
 
