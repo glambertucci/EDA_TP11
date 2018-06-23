@@ -142,6 +142,26 @@ bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollar
 	}
 }
 
+
 Graph::~Graph()
 {
+}
+void Graph::firstblock(vector <Node>& nodes) {//Arma el primer bloque
+	Block temp;
+	vector<byte>ceros;
+	for (int i = 0; i < 32; i++)
+		ceros.push_back(0);
+	temp.setNonce(0);
+	temp.setNumber(0);
+	temp.setTimeStamp(time(NULL));
+	temp.setHash(ceros);
+	Transaction temp2;
+	Output temp3;
+	temp3.setGP(40397224.0);
+	temp3.setPublicKey(nodes[0].getpkey());
+	temp2.outputs.push_back(temp3);
+
+	for (Node& node : nodes) {
+		node.addBlock(temp);		
+	}
 }

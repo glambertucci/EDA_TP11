@@ -21,5 +21,6 @@ public:
 	void get_nodes(vector <Node>& nodes_) { nodes_ = this->nodes; };
 private:
 	vector <Node> nodes;
+	void firstblock(vector <Node>& nodes);//Arma el primer bloque
 };
 

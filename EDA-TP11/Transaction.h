@@ -18,6 +18,8 @@ public:
 	vector <Input> inputs;
 	vector <Output> outputs;
 	vector<int> nodesVisited;
+
+
 private:
 };
 struct monl {

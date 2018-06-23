@@ -18,7 +18,9 @@ public:
 	Output();
 	~Output();
 	ECDSA<ECP, SHA256>::PublicKey getPublicKey() { return this->publicKey; }
+	void setPublicKey(ECDSA<ECP, SHA256>::PublicKey pb) { this->publicKey = pb; }
 	double getGP() { return this->guiPesos; }
+	void setGP(double gp) { this->guiPesos = gp; }
 	string getGPString() { return to_string(guiPesos); }
 private:
 	double guiPesos; 
