@@ -20,7 +20,8 @@ public:
 	Input(Output * out, vector<byte> signature) { this->output = out; this->signature = signature; }
 	~Input();																						
 	Output * output;	// De donde saca plata	
-	vector<byte> signature;			// Firma									
+	vector<byte> signature;			// Firma				
+	string getInputString();
 																						
 };
 
