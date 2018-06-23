@@ -16,7 +16,7 @@
 #include "Transaction.h"
 #include "Block.h"
 
-
+#define MINCEROS 3
 using namespace std;
 
 class Node

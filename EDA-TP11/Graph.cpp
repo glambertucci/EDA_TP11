@@ -118,7 +118,6 @@ void correctGraph(Node * node,Node * prev, vector<Node>& nodes, vector<int>& che
 		check.push_back(num);
 		correctGraph(node->getNextNode(), node, nodes, check);
 	}
-
 }
 
 bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollars, bool realTrans) {
@@ -160,8 +159,7 @@ void Graph::firstblock(vector <Node>& nodes) {//Arma el primer bloque
 	temp3.setGP(40397224.0);
 	temp3.setPublicKey(nodes[0].getpkey());
 	temp2.outputs.push_back(temp3);
-
-	for (Node& node : nodes) {
+	for (Node& node : nodes) 
 		node.addBlock(temp);		
-	}
+	
 }
