@@ -18,7 +18,7 @@ public:
 	vector <Input> inputs;
 	vector <Output> outputs;
 	vector<int> nodesVisited;
-
+	string getTxString();
 
 private:
 };
