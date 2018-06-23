@@ -126,7 +126,7 @@ int main(int argc, char ** argv)
 							nodeA = nullptr;
 							nodeB = nullptr;
 						}
-						else cout << "not enough funds";
+						else cout << "Not enough funds!"<<endl;
 					}
 					else
 						confirmTransaction.unpressButton();
