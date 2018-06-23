@@ -14,7 +14,11 @@ Node::~Node()
 
 void Node::recieveTransaction(Transaction Tx)
 {
-	this->nonConfirmedTransactions.push(Tx);
+	if (find(Tx.nodesVisited.begin(), Tx.nodesVisited.end(), num) == Tx.nodesVisited.end()) {
+		Tx.nodesVisited.push_back(this->num);
+		this->nonConfirmedTransactions.push(Tx);
+	}
+
 }
 
 void Node::recieveBlock(Block block)

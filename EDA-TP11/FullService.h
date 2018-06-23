@@ -5,7 +5,7 @@ class FullService :
 {
 public:
 	FullService(int a) : Node(a){
-		this->miner = true;
+		this->miner = false;
 		this->post = nullptr;
 		this->prev = nullptr;
 	}

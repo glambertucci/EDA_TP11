@@ -81,7 +81,7 @@ void Graph::checkAndRecieveBlocks()
 {
 	for (Node& node : nodes) {
 		bool ok = false;
-		Block temp = *node.getUncheckedBlock();
+		Block temp = *(node.getUncheckedBlock());
 		node.checkBlock(ok, temp);
 		//Tengo que "pisar" a ese bloque, o crear uno nuevo, no se
 	}
@@ -97,20 +97,19 @@ void correctGraphBackwards(Node * node, Node * prev, int first) {
 
 void correctGraph(Node * node,Node * prev, vector<Node>& nodes, vector<int>& check) {
 
-	if (check.size() == nodes.size()) {
+	if (check.size() == nodes.size()) {//me fijo si es el ultimo
 		int num = check[check.size() - 1];
-		vector<Node>::iterator last = find_if(nodes.begin(), nodes.end(), [num](Node& node) {return (node.getNum() == num); });
+		vector<Node>::iterator last = find_if(nodes.begin(), nodes.end(), [num](Node& node) {return (node.getNum() == num); });//agarro el ultimo nodo y lo uno al primero
 		num = check[0];
 		vector<Node>::iterator first = find_if(nodes.begin(), nodes.end(), [num](Node& node) {return (node.getNum() == num); });
 		Node *last_ =&*last;
 		last_->setNextNode(&*first);
-
 		return;
 	}
 
 	int num = node->getNum();
-	if (find(check.begin(), check.end(), num) != check.end()) {
-		int pos = rand() % nodes.size();
+	if (find(check.begin(), check.end(), num) != check.end()) {//sino agarro el NUMERO SECRETO (SHHHH) del nodo y me fijo si ya fue agregado a grafo
+		int pos = rand() % nodes.size();//si lo fue busco un nodo al azar, remuevo el ultimo nodo y hago que el nodo anterior apunte a un nodo aleatorio
 		check.pop_back();
 		prev->setNextNode(&nodes[pos]);
 		correctGraph(prev,node, nodes, check);
