@@ -52,7 +52,7 @@ public:
 	void setPrevNode(Node* node) { this->prev = node; }
 	Node * getNextNode() { return post; }
 	Node * getPrevNode() { return prev; }
-
+	double Guipesos=0;
 	void setTransactionTimestamp();
 	chrono::high_resolution_clock::time_point getTransactionTimeStamp() { return transactionTimestamp; }
 	chrono::high_resolution_clock::time_point getBlockTimestamp() { return blockTimestamp; }

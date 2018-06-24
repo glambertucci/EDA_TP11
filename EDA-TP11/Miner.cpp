@@ -6,7 +6,7 @@ void Miner::mining(Transaction Tx, CryptoPP::ECDSA <CryptoPP::ECP, CryptoPP::SHA
 	stack <Transaction> txStack = actualBlock.getBlock();
 	for(int i = 0 ; i <(txStack.size()); i++)
 	{
-		toHash += to_string((txStack.top());
+		//toHash += to_string((txStack.top());
 	}
 
 }

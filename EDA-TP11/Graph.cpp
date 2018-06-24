@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include "TransactionHelper.h"
 #include <vector>
+#define STARTMONEY 10000
 void correctGraph(Node * node, Node * prev, vector<Node>& nodes, vector<int>& check);
 void correctGraphBackwards(Node * node, Node * prev, int first);
 Graph::Graph(unsigned int node)
@@ -49,6 +50,9 @@ void Graph::shuffleNodes()
 	vector<int> check;
 	correctGraph(&nodes[0], nullptr, nodes, check);
 	correctGraphBackwards(&nodes[0], nullptr, nodes[0].getNum());
+	//nodes[0].Guipesos = STARTMONEY;
+	for (int i = 0; i < this->nodes.size(); i++)
+		nodes[i].Guipesos = STARTMONEY;
 }
 
 void Graph::checkAndSendTransactions()
@@ -130,14 +134,15 @@ bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollar
 				addOutput(*source, tx, vuelto);
 			}
 			addOutput(*dest, tx, lukeDollars);
-
 			source->recieveTransaction(tx);
+			source->Guipesos -= lukeDollars;
+			dest->Guipesos += lukeDollars;
 			return true;
 		}
 		return false;
 	}
 	else {
-
+		cout << "Malicius Transaction detected!" << endl;
 	}
 }
 

@@ -11,10 +11,10 @@ Input::~Input()
 {
 }
 
-string Input::getInputString()
-{
-	string a;
-	for (byte sign : signature)
-		a = sign;
-
-}
+//string Input::getInputString()
+//{
+//	string a;
+//	for (byte sign : signature)
+//		a = sign;
+//
+//}

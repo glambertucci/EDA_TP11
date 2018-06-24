@@ -86,11 +86,10 @@ Block * Node::getUncheckedBlock()
 }
 
 void Node::checkBlock(bool & ok, Block & block)
-{
+{ 
 	uint16_t tempnonce=block.getNonce();
 	SHA256 hash;
 	string message =	block.getString();
-	//string message = "abcdefghijklmnopqrstuvwxyz";
 	string digest;
 	StringSource s(message, true, new HashFilter(hash, new HexEncoder(new StringSink(digest))));
 	int num = 0;

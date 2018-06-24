@@ -21,7 +21,7 @@ public:
 	~Input();																						
 	Output * output;	// De donde saca plata	
 	vector<byte> signature;			// Firma				
-	string getInputString();
+	//string getInputString();
 																						
 };
 

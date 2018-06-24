@@ -12,7 +12,7 @@ int addInput(Node& nod, Transaction &Tx, int cash)
 {
 	unsigned int index = 0;
 	vector<monl> cash_;
-	int vuelto;
+	int vuelto=0;
 	do {
 		monl temp = findMoneyIndex(nod, (int)index);
 		if (temp.money > 0)
@@ -21,7 +21,6 @@ int addInput(Node& nod, Transaction &Tx, int cash)
 			vuelto = sum(cash_) - cash;
 			if (vuelto >= 0) {
 				for (int i = 0; i < cash_.size(); i++) {
-
 					Input temp_;
 					temp_.output = findCorrectOutput(nod, (unsigned int)index);
 					temp_.signature = nod.sign(findCorrectOutput(nod, index)->getGPString());
@@ -30,8 +29,8 @@ int addInput(Node& nod, Transaction &Tx, int cash)
 			}
 		}
 		index++;
+		break;
 	} while (sum(cash_) < cash);
-
 	return vuelto;
 }
 
@@ -58,7 +57,9 @@ bool hasFunds(Node& nod, int cash) {//Busca fondos en el vector de nodos hasta q
 		if (mani > -1) break;
 		if (mani >= cash)funds = true;
 	} while (mani < cash);
-	return funds;
+	if (nod.Guipesos >= cash)
+		return true;
+	return false;
 }
 
 

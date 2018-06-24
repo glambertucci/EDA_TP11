@@ -17,7 +17,7 @@ string Transaction::getTxString()
 {
 	string a;
 	
-	return;
+	return "TxString";
 }
 
 

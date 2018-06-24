@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <stack>
-
+#include <string>
 #include "Transaction.h"
 
 using namespace std;
@@ -18,6 +18,7 @@ public:
 	void setTimeStamp(uint32_t ts) { this->timestamp = ts; }
 	void setNumber(uint32_t num) { this->number = num; }
 	void setHash(vector<byte> hs) { this->previusBlock = hs; }
+	std::string getString();
 
 private:
 	stack <Transaction> block;

@@ -19,6 +19,7 @@ int main(int argc, char ** argv)
 	vector<Node> nodes;
 	web.shuffleNodes();
 	web.get_nodes(nodes);
+	
 	Drawer drawer(nodes);
 	ALLEGRO_DISPLAY * mainDisp = al_get_current_display();
 	AllegroDisplayFactory displayFactory;
@@ -116,7 +117,7 @@ int main(int argc, char ** argv)
 				confirmTransaction.checkIfPressed(mouse.x, mouse.y);
 				if (confirmTransaction.isPressed()) {
 					if (nodeA != nullptr && nodeB != nullptr && cash.getText().size() > 0) {
-						if (web.createTransaction(nodeA, nodeB, atoi(cash.getText().c_str()), trueTransaction)) {
+                                     						if (web.createTransaction(nodeA, nodeB, atoi(cash.getText().c_str()), trueTransaction)) {
 							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
 							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
 							transactionWindow.close();
