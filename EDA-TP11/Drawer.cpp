@@ -59,25 +59,19 @@ void Drawer::createInformationWindow(ALLEGRO_DISPLAY * displ, void * node)
 	int i = -1;
 	float boxHeight = 50;
 	shared_ptr<WrittenBox> BlocksMined(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Blocks Mined:", "font.ttf", "white"))
-		, lastMinerKey(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Last Miner:", "font.ttf", "white"))
 		, NodeType(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Node Type:", "font.ttf", "white"));
 
 	temp->titles.push_back(BlocksMined);
-	temp->titles.push_back(lastMinerKey);
 	temp->titles.push_back(NodeType);
 	i = 0;
 
 	shared_ptr<WrittenBox> BlocksMinedValue(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,to_string(temp->graficNode->node->getBlocksMined()), "font.ttf", "white"))
-		, lastMinerValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, (temp->graficNode->node->isItLastMiner() ? "Yes" : "No"), "font.ttf", "white"))
-		, nodeTypeValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,(temp->graficNode->node->isItMiner()? "Miner": "Full Service"), "font.ttf", "white"))
+		, nodeTypeValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,(temp->graficNode->node->miner? "Miner": "Full Service"), "font.ttf", "white"))
 		;
 	temp->values.push_back(BlocksMinedValue);
-	temp->values.push_back(lastMinerValue);
 	temp->values.push_back(nodeTypeValue);
 
 	this->windows.push_back(temp);
-	// DEBUG
-	temp->graficNode->node->setTransactionTimestamp();
 }
 
 GraficNode * Drawer::NodePressed(int x, int y)

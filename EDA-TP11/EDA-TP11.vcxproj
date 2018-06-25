@@ -166,6 +166,7 @@
     <ClInclude Include="Miner.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Output.h" />
+    <ClInclude Include="timer.h" />
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="TransactionHelper.h" />
   </ItemGroup>
@@ -185,6 +186,7 @@
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Output.cpp" />
+    <ClCompile Include="timer.cpp" />
     <ClCompile Include="Transaction.cpp" />
     <ClCompile Include="TransactionHelper.cpp" />
   </ItemGroup>

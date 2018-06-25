@@ -1,13 +1,22 @@
 #include "Graph.h"
 #include "TransactionHelper.h"
 #include <vector>
+#define STARTMONEY 10000
 void correctGraph(Node * node, Node * prev, vector<Node>& nodes, vector<int>& check);
 void correctGraphBackwards(Node * node, Node * prev, int first);
+
+
 Graph::Graph(unsigned int node)
 {
 	// Crea todos los nodos y hace el grafo
-	for (int i = 0; i < node; i++)
-		this->nodes.push_back(Node(i));
+	int fullService = rand() % (node - 5);
+	int i;
+	for (i = 0; i < fullService; i++) {
+		this->nodes.push_back(FullService(i));
+	}
+
+	for (int a = 0; a < (node - fullService); a++)
+		this->nodes.push_back(Miner(a+fullService));
 	for (int i = 0; i < node; i++)
 	{
 		if (i == 0) {
@@ -49,6 +58,9 @@ void Graph::shuffleNodes()
 	vector<int> check;
 	correctGraph(&nodes[0], nullptr, nodes, check);
 	correctGraphBackwards(&nodes[0], nullptr, nodes[0].getNum());
+	//nodes[0].Guipesos = STARTMONEY;
+	for (int i = 0; i < this->nodes.size(); i++)
+		nodes[i].Guipesos = STARTMONEY;
 }
 
 void Graph::checkAndSendTransactions()
@@ -118,7 +130,6 @@ void correctGraph(Node * node,Node * prev, vector<Node>& nodes, vector<int>& che
 		check.push_back(num);
 		correctGraph(node->getNextNode(), node, nodes, check);
 	}
-
 }
 
 bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollars, bool realTrans) {
@@ -131,17 +142,38 @@ bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollar
 				addOutput(*source, tx, vuelto);
 			}
 			addOutput(*dest, tx, lukeDollars);
-
 			source->recieveTransaction(tx);
+
+			//source->Guipesos -= lukeDollars;
+			//dest->Guipesos += lukeDollars;
 			return true;
 		}
 		return false;
 	}
 	else {
-
+		cout << "Malicius Transaction detected!" << endl;
 	}
 }
 
+
 Graph::~Graph()
 {
+}
+void Graph::firstblock(vector <Node>& nodes) {//Arma el primer bloque
+	Block temp;
+	vector<byte>ceros;
+	for (int i = 0; i < 32; i++)
+		ceros.push_back(0);
+	temp.setNonce(0);
+	temp.setNumber(0);
+	temp.setTimeStamp(time(NULL));
+	temp.setHash(ceros);
+	Transaction temp2;
+	Output temp3;
+	temp3.setGP(40397224.0);
+	temp3.setPublicKey(nodes[0].getpkey());
+	temp2.outputs.push_back(temp3);
+	for (Node& node : nodes) 
+		node.addBlock(temp);		
+	
 }

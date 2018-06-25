@@ -13,6 +13,12 @@ Transaction::~Transaction()
 {
 }
 
+string Transaction::getTxString()
+{
+	string a;
+	
+	return "TxString";
+}
 
 
 

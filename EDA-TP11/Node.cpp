@@ -42,6 +42,7 @@ void Node::checkTransaction(bool & ok, Transaction & Tx)
 void Node::addTransaction(Transaction & Tx)
 {
 	this->newTransactions.push_back(Tx);
+	this->setTransactionTimestamp();
 }
 
 void Node::sendLastTransaction()
@@ -51,7 +52,7 @@ void Node::sendLastTransaction()
 		NO SE VA A LLAMAR A RECIEVE TRANS EN EL MAIN
 	*/
 
-	if (this->newTransactions.size() > 0) {
+	if (this->newTransactions.size() > 0 ) {
 		
 		this->post->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
 		this->prev->recieveTransaction(this->newTransactions[newTransactions.size() - 1]);
@@ -87,21 +88,40 @@ Block * Node::getUncheckedBlock()
 }
 
 void Node::checkBlock(bool & ok, Block & block)
-{
-	bool TxOk = false;
-	stack<Transaction> transactInBlock = block.getBlock();
-	
-	while (transactInBlock.size() != 0) {
-		Transaction temp = transactInBlock.top();
-		transactInBlock.pop();
-		checkTransaction(TxOk, temp);
-		if (!TxOk) {
-			ok = false;
-			return;
-		}
+{ 
+	uint16_t tempnonce=block.getNonce();
+	SHA256 hash;
+	string message =	block.getString();
+	string digest;
+	StringSource s(message, true, new HashFilter(hash, new HexEncoder(new StringSink(digest))));
+	int num = 0;
+	for (int i = 0; i < digest.size(); i++)
+	{
+		if ('0' == digest[i])
+			num++;
 	}
-	if (ok)
-		addBlock(block);
+	if (num >= MINCEROS) {
+		this->addBlock(block);
+		
+	}
+
+	
+	//Me tengo que fijar al cantidad de ceros.	
+
+	//bool TxOk = false;
+	//stack<Transaction> transactInBlock = block.getBlock();
+	//
+	//while (transactInBlock.size() != 0) {
+	//	Transaction temp = transactInBlock.top();
+	//	transactInBlock.pop();
+	//	checkTransaction(TxOk, temp);
+	//	if (!TxOk) {
+	//		ok = false;
+	//		return;
+	//	}
+	//}
+	//if (ok)
+	//	addBlock(block);
 }
 
 void Node::addBlock(Block & block)
@@ -111,7 +131,7 @@ void Node::addBlock(Block & block)
 
 bool Node::isMyPublicKey(ECDSA<ECP, SHA256>::PublicKey publicKey)
 {
-	string hashCheck = "Guido sos re tonto";
+	string hashCheck = "Lucas Travest'isola";
 
 	vector<byte> signature = this->sign(hashCheck);
 

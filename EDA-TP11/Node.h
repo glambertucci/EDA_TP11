@@ -16,7 +16,7 @@
 #include "Transaction.h"
 #include "Block.h"
 
-
+#define MINCEROS 3
 using namespace std;
 
 class Node
@@ -53,12 +53,14 @@ public:
 	Node * getPrevNode() { return prev; }
 
 	int getBlocksMined() { return blocksMined; }
+	//bool isItLastMiner() { return amILastMiner; }
 
-	bool isItMiner() { return miner; }
-	bool isItLastMiner() { return amILastMiner; }
+	double Guipesos=0;
+//>>>>>>> fc95ca1141a58838dc1b29c9a6466986da445f65
 	void setTransactionTimestamp();
 	chrono::high_resolution_clock::time_point getTransactionTimeStamp() { return transactionTimestamp; }
 	chrono::high_resolution_clock::time_point getBlockTimestamp() { return blockTimestamp; }
+	bool miner;
 protected:
 	int blocksMined = 0;
 	int num;
@@ -69,8 +71,10 @@ protected:
 	stack<Block> blockchain;
 	vector <Transaction> newTransactions;
 	queue <Transaction> nonConfirmedTransactions;
-	bool miner;
-	bool amILastMiner = false;
+//<<<<<<< HEAD
+//	bool amILastMiner = false;
+//=======
+//>>>>>>> fc95ca1141a58838dc1b29c9a6466986da445f65
 	Block actualBlock;
 	Block nonConfirmedBlock;
 	chrono::high_resolution_clock::time_point transactionTimestamp,blockTimestamp;
