@@ -132,7 +132,7 @@ int main(int argc, char ** argv)
 							hola.destiny = nodeB;
 							Timer tim;
 							hola.time = &tim;
-							hola.transcurred = 10000 + (rand() % 2000);//acordate de poner en el 5
+							hola.transcurred = 60000 + (rand() % 2000);//acordate de poner en el 5
 							hola.time->start();
 							todo.push_back(hola);
 							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
