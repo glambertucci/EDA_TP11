@@ -135,8 +135,9 @@ bool Graph::createTransaction(Node* source, Node * dest, unsigned int lukeDollar
 			}
 			addOutput(*dest, tx, lukeDollars);
 			source->recieveTransaction(tx);
-			source->Guipesos -= lukeDollars;
-			dest->Guipesos += lukeDollars;
+
+			//source->Guipesos -= lukeDollars;
+			//dest->Guipesos += lukeDollars;
 			return true;
 		}
 		return false;

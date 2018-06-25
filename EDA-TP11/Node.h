@@ -56,6 +56,7 @@ public:
 	void setTransactionTimestamp();
 	chrono::high_resolution_clock::time_point getTransactionTimeStamp() { return transactionTimestamp; }
 	chrono::high_resolution_clock::time_point getBlockTimestamp() { return blockTimestamp; }
+	bool miner;
 protected:
 	int num;
 	Node * prev, *post;
@@ -65,7 +66,6 @@ protected:
 	stack<Block> blockchain;
 	vector <Transaction> newTransactions;
 	queue <Transaction> nonConfirmedTransactions;
-	bool miner;
 	Block actualBlock;
 	Block nonConfirmedBlock;
 	chrono::high_resolution_clock::time_point transactionTimestamp,blockTimestamp;

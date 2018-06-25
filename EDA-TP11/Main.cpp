@@ -6,20 +6,28 @@
 #include "Allegro/AllegroAddons.h"
 #include "Allegro/WritableBox.h"
 #include "GraphicHelper.h"
-
+#include "timer.h"
 #include "Graph.h"
 
-int main(int argc, char ** argv) 
+typedef struct {
+	Node* source;
+	Node* destiny;
+	Timer * time;
+	int transcurred;
+	double amaunt;
+}utxo;
+
+int main(int argc, char ** argv)
 {
-	AllegroClassV2 allegro(Allegro::InitMode::Full,1900,1000,10);
+	vector <utxo> todo;
+	AllegroClassV2 allegro(Allegro::InitMode::Full, 1900, 1000, 10);
 	//Parseo
 	int nodesQuantity = 10;
-
 	Graph web(nodesQuantity);
 	vector<Node> nodes;
 	web.shuffleNodes();
 	web.get_nodes(nodes);
-	
+
 	Drawer drawer(nodes);
 	ALLEGRO_DISPLAY * mainDisp = al_get_current_display();
 	AllegroDisplayFactory displayFactory;
@@ -33,14 +41,14 @@ int main(int argc, char ** argv)
 	WrittenBox makeFakeTrans(al_get_display_width(al_get_current_display()) - 300, 0, 300, 50, 20, "Make Fake Transaction", "font.ttf", "black");
 	makeFakeTrans.TransformIntoButton("white", "green", 5);
 
-	AllegroWindow transactionWindow(1000, 800,"Transaction Manager");
+	AllegroWindow transactionWindow(1000, 800, "Transaction Manager");
 
 	WrittenBox TransactionNodeA(200, 100, 100, 50, 20, "Source", "font.ttf", "black");
 	TransactionNodeA.TransformIntoButton("white", "black", 0);
 	transactionWindow.addDrawing(TransactionNodeA.getBitmap(), TransactionNodeA.getX(), TransactionNodeA.getY());
 	Node * nodeA = nullptr;
 
-	WrittenBox TransactionNodeB(700, 100, 100, 50, 20, "Dest", "font.ttf","black");
+	WrittenBox TransactionNodeB(700, 100, 100, 50, 20, "Dest", "font.ttf", "black");
 	TransactionNodeB.TransformIntoButton("white", "black", 0);
 	transactionWindow.addDrawing(TransactionNodeB.getBitmap(), TransactionNodeB.getX(), TransactionNodeB.getY());
 	Node * nodeB = nullptr;
@@ -63,7 +71,7 @@ int main(int argc, char ** argv)
 				transactionWindow.setAsMain();
 				transactionWindow.update();
 			}
-			
+
 			allegro.setMainDisplay();
 			allegro.setDisplayColor("black");
 			drawer.Draw();
@@ -80,7 +88,7 @@ int main(int argc, char ** argv)
 		case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
 			ALLEGRO_MOUSE_EVENT mouse = eventFactory.getMouseEvent();
 			if (mouse.display == mainDisp) {
-				
+
 				if (transactionWindow.isOpen() && TransactionNodeA.isPressed()) {
 					getNodeForTransaction(&nodeA, drawer, transactionWindow, TransactionNodeA, mouse);
 				}
@@ -117,7 +125,16 @@ int main(int argc, char ** argv)
 				confirmTransaction.checkIfPressed(mouse.x, mouse.y);
 				if (confirmTransaction.isPressed()) {
 					if (nodeA != nullptr && nodeB != nullptr && cash.getText().size() > 0) {
-                                     						if (web.createTransaction(nodeA, nodeB, atoi(cash.getText().c_str()), trueTransaction)) {
+						if (web.createTransaction(nodeA, nodeB, atoi(cash.getText().c_str()), trueTransaction)) {
+							utxo hola;
+							hola.amaunt = atoi(cash.getText().c_str());
+							hola.source = nodeA;
+							hola.destiny = nodeB;
+							Timer tim;
+							hola.time = &tim;
+							hola.transcurred = 10000 + (rand() % 2000);//acordate de poner en el 5
+							hola.time->start();
+							todo.push_back(hola);
 							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
 							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeB));
 							transactionWindow.close();
@@ -127,7 +144,7 @@ int main(int argc, char ** argv)
 							nodeA = nullptr;
 							nodeB = nullptr;
 						}
-						else cout << "Not enough funds!"<<endl;
+						else cout << "Not enough funds!" << endl;
 					}
 					else
 						confirmTransaction.unpressButton();
@@ -157,6 +174,17 @@ int main(int argc, char ** argv)
 			else
 				leave = true;
 			break;
+		}
+		if (todo.size() > 0) {
+			for (int i = 0; i < todo.size(); i++) {
+				todo[i].time->stop();
+				if (todo[i].time->getTime() > todo[i].transcurred) {
+					todo[i].source->Guipesos -= todo[i].amaunt;
+					todo[i].destiny->Guipesos += todo[i].amaunt;
+					web.lastSuccesNode = rand() % web.Miners.size();
+					todo.pop_back();
+				}
+			}
 		}
 	}
 }
