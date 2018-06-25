@@ -53,6 +53,7 @@ public:
 	Node * getPrevNode() { return prev; }
 
 	int getBlocksMined() { return blocksMined; }
+	void setBlocksMined() { this->blocksMined ++; }
 	//bool isItLastMiner() { return amILastMiner; }
 
 	double Guipesos=0;

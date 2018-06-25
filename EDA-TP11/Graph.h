@@ -27,10 +27,11 @@ public:
 		}
 	};
 	vector <int> Miners;
+	vector <Node> nodes;
+
 private:
 
 
-	vector <Node> nodes;
 	vector <Timer> timers;
 	void firstblock(vector <Node>& nodes);//Arma el primer bloque
 };

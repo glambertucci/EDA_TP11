@@ -11,19 +11,19 @@ Drawer::Drawer(vector<Node>& nodes)
 	vector<float> vertex;
 	srand(time(nullptr));
 	linkVertexAndNode(nodes);
-	for (Node& node : nodes) 
+	for (Node& node : nodes)
 		setUpVertex(vertex);
-	
+
 
 	do {
 		vector<unsigned int> replace;
 
-		for (int i = 0; i+2 < vertex.size(); i+=2) {
-			for (int a = 0; a+2 < vertex.size(); a+=2) {
+		for (int i = 0; i + 2 < vertex.size(); i += 2) {
+			for (int a = 0; a + 2 < vertex.size(); a += 2) {
 				if (a != i) {
-					if (sqrt(pow(vertex[i] - vertex[a], 2) + pow(vertex[i+1] - vertex[a+1], 2)) < DISTANCE_THRESHOLD) {
+					if (sqrt(pow(vertex[i] - vertex[a], 2) + pow(vertex[i + 1] - vertex[a + 1], 2)) < DISTANCE_THRESHOLD) {
 						vertex[i] = X_MIN_THRESHOLD + rand() % (int)(al_get_display_width(al_get_current_display()) - X_MAX_THRESHOLD - X_MIN_THRESHOLD);
-						vertex[i+1] = Y_MIN_THRESHOLD + rand() % (int)(al_get_display_height(al_get_current_display()) - Y_MAX_THRESHOLD - Y_MIN_THRESHOLD);
+						vertex[i + 1] = Y_MIN_THRESHOLD + rand() % (int)(al_get_display_height(al_get_current_display()) - Y_MAX_THRESHOLD - Y_MIN_THRESHOLD);
 					}
 				}
 			}
@@ -34,7 +34,7 @@ Drawer::Drawer(vector<Node>& nodes)
 
 	for (GraficNode & gfNode : GraficNodes) {
 		gfNode.x = vertex[index];
-		gfNode.y = vertex[index+1];
+		gfNode.y = vertex[index + 1];
 		index += 2;
 	}
 	this->loadAssets();
@@ -52,21 +52,21 @@ void Drawer::createInformationWindow(ALLEGRO_DISPLAY * displ, void * node)
 	shared_ptr<NodeInfo> temp(new NodeInfo);
 	temp->display = displ;
 	temp->graficNode = (GraficNode *)node;
-	
+
 	float w = al_get_display_width(displ), h = al_get_display_height(displ);
 	float xOffset = 20;
 	float yOffset = 50;
 	int i = -1;
 	float boxHeight = 50;
 	shared_ptr<WrittenBox> BlocksMined(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Blocks Mined:", "font.ttf", "white"))
-		, NodeType(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Node Type:", "font.ttf", "white"));
+		, NodeType(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Node Type:", "font.ttf", "white"));
 
 	temp->titles.push_back(BlocksMined);
 	temp->titles.push_back(NodeType);
 	i = 0;
-
-	shared_ptr<WrittenBox> BlocksMinedValue(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,to_string(temp->graficNode->node->getBlocksMined()), "font.ttf", "white"))
-		, nodeTypeValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,(temp->graficNode->node->miner? "Miner": "Full Service"), "font.ttf", "white"))
+	cout << temp->graficNode->node->getBlocksMined() << endl;
+	shared_ptr<WrittenBox> BlocksMinedValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, to_string(temp->graficNode->node->getBlocksMined()), "font.ttf", "white"))
+		, nodeTypeValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, (temp->graficNode->node->miner ? "Miner" : "Full Service"), "font.ttf", "white"))
 		;
 	temp->values.push_back(BlocksMinedValue);
 	temp->values.push_back(nodeTypeValue);
@@ -111,7 +111,7 @@ void Drawer::Draw()
 
 	for (GraficNode& gfNode : GraficNodes) {
 		chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
-		if ((timePassed.count()) > 0 && (timePassed.count()) <= (3 )) {
+		if ((timePassed.count()) > 0 && (timePassed.count()) <= (3)) {
 			float increaseFactor = timePassed.count() * 1000;
 
 			increaseFactor = ((-8 * increaseFactor) / (3000.0)) + 8;
@@ -144,7 +144,7 @@ void Drawer::Draw()
 	for (GraficNode& gfNode : GraficNodes) {
 
 		chrono::duration<float> timePassed = std::chrono::high_resolution_clock::now() - gfNode.node->getTransactionTimeStamp();
-		if ((timePassed.count()) > 0 && (timePassed.count()) <= (3 )) {
+		if ((timePassed.count()) > 0 && (timePassed.count()) <= (3)) {
 			float increaseFactor = timePassed.count() * 1000;
 
 			increaseFactor = ((-15 * increaseFactor) / (3000.0)) + 15;
@@ -152,7 +152,7 @@ void Drawer::Draw()
 			al_draw_scaled_bitmap(gfNode.image, 0, 0, al_get_bitmap_width(gfNode.image), al_get_bitmap_height(gfNode.image), gfNode.x - RADIUS - increaseFactor, gfNode.y - RADIUS - increaseFactor, 2 * (RADIUS + increaseFactor), 2 * (RADIUS + increaseFactor), 0);
 
 		}
-		
+
 	}
 	for (GraficNode& gfNode : GraficNodes) {
 
@@ -172,7 +172,7 @@ void Drawer::Draw()
 ALLEGRO_BITMAP * Drawer::getNodeBitmap(Node * node)
 {
 	for (int i = 0; i < GraficNodes.size(); i++) {
-		if (GraficNodes[i].node == node) 
+		if (GraficNodes[i].node == node)
 			return GraficNodes[i].image;
 	}
 }
@@ -183,12 +183,12 @@ void Drawer::loadAssets()
 	for (int i = 1; i <= this->GraficNodes.size(); i++) {
 		string file = "Faces/" + to_string(i) + ".png";
 		GraficNodes[i - 1].image = al_load_bitmap(file.c_str());
- 	}
+	}
 }
 
 void Drawer::unloadAssets()
 {
-	for (GraficNode& node : GraficNodes) 
+	for (GraficNode& node : GraficNodes)
 		al_destroy_bitmap(node.image);
 }
 
@@ -203,7 +203,7 @@ void Drawer::DrawInformationWindows()
 		float imageW = al_get_bitmap_width(nodeInfo->graficNode->image);
 		float imageH = al_get_bitmap_height(nodeInfo->graficNode->image);
 
-		al_draw_scaled_bitmap(nodeInfo->graficNode->image, 0, 0, imageW, imageH,-50 + al_get_display_width(nodeInfo->display)/2, 50, 100, 100, 0);
+		al_draw_scaled_bitmap(nodeInfo->graficNode->image, 0, 0, imageW, imageH, -50 + al_get_display_width(nodeInfo->display) / 2, 50, 100, 100, 0);
 
 		for (shared_ptr<WrittenBox>& wbox : nodeInfo->titles)
 			wbox->draw();
@@ -239,24 +239,24 @@ void Drawer::linkVertexAndNode(vector<Node>& nodes)
 	}
 
 	for (GraficNode& gfNode : GraficNodes) {
-		
-			Node * temp = gfNode.node->getNextNode();
-			int index = 0;
-			//while (!temp->isMyPublicKey(nodes[index].getpkey()))//DEBUG
-			while (!temp->isMyNum(nodes[index].getNum()))
-			{
-				index++;
-			};
-			gfNode.post = &GraficNodes[index];
+
+		Node * temp = gfNode.node->getNextNode();
+		int index = 0;
+		//while (!temp->isMyPublicKey(nodes[index].getpkey()))//DEBUG
+		while (!temp->isMyNum(nodes[index].getNum()))
+		{
+			index++;
+		};
+		gfNode.post = &GraficNodes[index];
 	}
 	for (GraficNode& gfNode : GraficNodes) {
-			Node * temp = gfNode.node->getPrevNode();
-			int index = 0;
-			//while (!temp->isMyPublicKey(nodes[index].getpkey())) {//DEBUG
-			while (!temp->isMyNum(nodes[index].getNum())){
-				index++;
-			};
-			gfNode.prev = &GraficNodes[index];
+		Node * temp = gfNode.node->getPrevNode();
+		int index = 0;
+		//while (!temp->isMyPublicKey(nodes[index].getpkey())) {//DEBUG
+		while (!temp->isMyNum(nodes[index].getNum())) {
+			index++;
+		};
+		gfNode.prev = &GraficNodes[index];
 	}
 
 }

@@ -133,7 +133,7 @@ int main(int argc, char ** argv)
 							hola.destiny = nodeB;
 							Timer tim;
 							hola.time = &tim;
-							hola.transcurred = 60000 + (rand() % 2000);//acordate de poner en el 5
+							hola.transcurred = 1000 + (rand() % 2000);//acordate de poner en el 5
 							hola.time->start();
 							todo.push_back(hola);
 							transactionWindow.removeDrawing(drawer.getNodeBitmap(nodeA));
@@ -181,6 +181,7 @@ int main(int argc, char ** argv)
 				todo[i].time->stop();
 				if (todo[i].time->getTime() > todo[i].transcurred) {
 					web.lastSuccesNode = rand() % web.Miners.size();
+					web.nodes[web.Miners[web.lastSuccesNode]].setBlocksMined();
 					todo.clear();
 				}
 			}
