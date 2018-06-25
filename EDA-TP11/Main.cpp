@@ -177,13 +177,11 @@ int main(int argc, char ** argv)
 			break;
 		}
 		if (todo.size() > 0) {
-			for (int i = 0; i < todo.size(); i++) {
+			for (int i = 0; i < todo.size(); i++) {//block mined
 				todo[i].time->stop();
 				if (todo[i].time->getTime() > todo[i].transcurred) {
-					todo[i].source->Guipesos -= todo[i].amaunt;
-					todo[i].destiny->Guipesos += todo[i].amaunt;
 					web.lastSuccesNode = rand() % web.Miners.size();
-					todo.pop_back();
+					todo.clear();
 				}
 			}
 		}
