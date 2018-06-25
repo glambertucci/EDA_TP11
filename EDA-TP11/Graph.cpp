@@ -95,7 +95,6 @@ void Graph::checkAndRecieveBlocks()
 		bool ok = false;
 		Block temp = *(node.getUncheckedBlock());
 		node.checkBlock(ok, temp);
-		//Tengo que "pisar" a ese bloque, o crear uno nuevo, no se
 	}
 }
 

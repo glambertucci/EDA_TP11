@@ -46,8 +46,6 @@ public:
 	void createInformationWindow(ALLEGRO_DISPLAY * displ, void * node);
 	//Si se clickea sobre un nodo, esta funcion devuelve un puntero al nodo presionado
 	GraficNode* NodePressed(int x, int y);
-	// En el programa de verdad deberia devolver un puntero al nodo, o su public key, asi graph sabe todo. Lo mejor seria una estructura
-	void buttonPressed(int x, int y, ALLEGRO_DISPLAY * displ);
 	// Cierra una ventana de informacion dada su display
 	void closeInformationWindow(ALLEGRO_DISPLAY * display);
 	// Dibuja sobre la pantalla de inforamcion

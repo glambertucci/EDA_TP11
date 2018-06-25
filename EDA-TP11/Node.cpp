@@ -6,6 +6,7 @@ Node::Node(int a)
 {
 	this->num = a;
 	this->miner = false;
+	this->blocksMined = 10;
 }
 
 

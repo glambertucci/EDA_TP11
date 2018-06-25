@@ -153,8 +153,6 @@ int main(int argc, char ** argv)
 
 
 			}
-			else
-				drawer.buttonPressed(mouse.x, mouse.y, mouse.display);
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
 			ALLEGRO_DISPLAY_EVENT display = eventFactory.getDisplayEvent();

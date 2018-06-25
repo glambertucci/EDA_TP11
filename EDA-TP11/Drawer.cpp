@@ -59,16 +59,20 @@ void Drawer::createInformationWindow(ALLEGRO_DISPLAY * displ, void * node)
 	int i = -1;
 	float boxHeight = 50;
 	shared_ptr<WrittenBox> BlocksMined(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Blocks Mined:", "font.ttf", "white"))
+		, Money(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Guipesos:", "font.ttf", "white"))
 		, NodeType(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Node Type:", "font.ttf", "white"));
 
 	temp->titles.push_back(BlocksMined);
+	temp->titles.push_back(Money);
 	temp->titles.push_back(NodeType);
 	i = 0;
 	cout << temp->graficNode->node->getBlocksMined() << endl;
 	shared_ptr<WrittenBox> BlocksMinedValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, to_string(temp->graficNode->node->getBlocksMined()), "font.ttf", "white"))
+		, MoneyValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, to_string(temp->graficNode->node->Guipesos), "font.ttf", "white"))
 		, nodeTypeValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, (temp->graficNode->node->miner ? "Miner" : "Full Service"), "font.ttf", "white"))
 		;
 	temp->values.push_back(BlocksMinedValue);
+	temp->values.push_back(MoneyValue);
 	temp->values.push_back(nodeTypeValue);
 
 	this->windows.push_back(temp);
@@ -81,16 +85,6 @@ GraficNode * Drawer::NodePressed(int x, int y)
 			return &gfNode;
 	}
 	return nullptr;
-}
-
-void Drawer::buttonPressed(int x, int y, ALLEGRO_DISPLAY * displ)
-{
-	//for (shared_ptr<NodeInfo>& nodeInfo : this->windows) {
-	//	for (shared_ptr < WrittenBox > &wbox : nodeInfo->titles) {
-	//		if (wbox->checkIfPressed(x, y) && displ == nodeInfo->display)
-	//			//nodeInfo->graficNode->node->createTrans();
-	//	}
-	//}
 }
 
 void Drawer::closeInformationWindow(ALLEGRO_DISPLAY * display)
