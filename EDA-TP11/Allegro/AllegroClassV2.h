@@ -45,6 +45,8 @@ public:
 	void setDisplayName(const char * name);
 	void setMainDisplay();
 	void updateDisplay();
+	float getDisplayWidth();
+	float getDisplayHeight();
 
 
 	// instaladores

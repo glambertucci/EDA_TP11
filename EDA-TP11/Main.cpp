@@ -36,6 +36,9 @@ int main(int argc, char ** argv)
 	bool leave = false;
 	bool trueTransaction;
 
+	WrittenBox LastMiner(allegro.getDisplayWidth() / 2 - 100, (float)0, 200, 100,20, "Last node to mine:", "font.ttf", "white");
+	ALLEGRO_BITMAP * lastMinerNode = nullptr;
+
 	WrittenBox makeTrans(0, 0, 300, 50, 20, "Make Transaction", "font.ttf", "black");
 	makeTrans.TransformIntoButton("white", "green", 5);
 	bool makeTransAPressedOnce = false;
@@ -79,11 +82,17 @@ int main(int argc, char ** argv)
 
 			allegro.setMainDisplay();
 			allegro.setDisplayColor("black");
+			if (web.lastSuccesNode != 0)
+				lastMinerNode = drawer.getNodeBitmap(&web.nodes[web.Miners[web.lastSuccesNode]]);
+			if (lastMinerNode != nullptr)
+				al_draw_bitmap(lastMinerNode, allegro.getDisplayWidth() / 2, 160, 0);
+			LastMiner.draw();
 			drawer.Draw();
 			makeTrans.draw();
 			makeFakeTrans.draw();
 			drawer.DrawInformationWindows();
 			allegro.updateDisplay();
+
 
 			break;
 		case ALLEGRO_EVENT_KEY_DOWN:

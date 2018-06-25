@@ -284,6 +284,22 @@ void AllegroClassV2::updateDisplay()
 	displayAddon->updateDisplay();
 }
 
+float AllegroClassV2::getDisplayWidth()
+{
+	if (this->displayAddon->getDisplay() != nullptr)
+		return al_get_display_width(this->displayAddon->getDisplay());
+	else
+		return 0;
+}
+
+float AllegroClassV2::getDisplayHeight()
+{
+	if (this->displayAddon->getDisplay() != nullptr)
+		return al_get_display_height(this->displayAddon->getDisplay());
+	else
+		return 0;
+}
+
 
 AllegroClassV2::~AllegroClassV2()
 {
