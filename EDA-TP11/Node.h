@@ -39,7 +39,6 @@ public:
 	void checkBlock(bool& ok, Block& block);
 	void addBlock(Block& block);
 
-
 	bool isMyPublicKey(ECDSA<ECP, SHA256>::PublicKey publicKey);
 	ECDSA<ECP, SHA256>::PublicKey getpkey(void) { return this->publicKey; }
 	int getNum(void) { return num; }//DEBUG
@@ -53,10 +52,15 @@ public:
 	Node * getNextNode() { return post; }
 	Node * getPrevNode() { return prev; }
 
+	int getBlocksMined() { return blocksMined; }
+
+	bool isItMiner() { return miner; }
+	bool isItLastMiner() { return amILastMiner; }
 	void setTransactionTimestamp();
 	chrono::high_resolution_clock::time_point getTransactionTimeStamp() { return transactionTimestamp; }
 	chrono::high_resolution_clock::time_point getBlockTimestamp() { return blockTimestamp; }
 protected:
+	int blocksMined = 0;
 	int num;
 	Node * prev, *post;
 	ECDSA<ECP, SHA256>::PrivateKey privateKey;
@@ -66,6 +70,7 @@ protected:
 	vector <Transaction> newTransactions;
 	queue <Transaction> nonConfirmedTransactions;
 	bool miner;
+	bool amILastMiner = false;
 	Block actualBlock;
 	Block nonConfirmedBlock;
 	chrono::high_resolution_clock::time_point transactionTimestamp,blockTimestamp;

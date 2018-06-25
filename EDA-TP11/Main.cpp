@@ -11,7 +11,7 @@
 
 int main(int argc, char ** argv) 
 {
-	AllegroClassV2 allegro(Allegro::InitMode::Full,1900,1000,10);
+	AllegroClassV2 allegro(Allegro::InitMode::Full,1300,1000,10);
 	//Parseo
 	int nodesQuantity = 10;
 
@@ -28,21 +28,25 @@ int main(int argc, char ** argv)
 
 	WrittenBox makeTrans(0, 0, 300, 50, 20, "Make Transaction", "font.ttf", "black");
 	makeTrans.TransformIntoButton("white", "green", 5);
+	bool makeTransAPressedOnce = false;
 
 	WrittenBox makeFakeTrans(al_get_display_width(al_get_current_display()) - 300, 0, 300, 50, 20, "Make Fake Transaction", "font.ttf", "black");
 	makeFakeTrans.TransformIntoButton("white", "green", 5);
+	bool makeFrakeTransPressedOnce = false;
 
 	AllegroWindow transactionWindow(1000, 800,"Transaction Manager");
 
 	WrittenBox TransactionNodeA(200, 100, 100, 50, 20, "Source", "font.ttf", "black");
 	TransactionNodeA.TransformIntoButton("white", "black", 0);
 	transactionWindow.addDrawing(TransactionNodeA.getBitmap(), TransactionNodeA.getX(), TransactionNodeA.getY());
+	bool nodeAPressedOnce = false;
 	Node * nodeA = nullptr;
 
 	WrittenBox TransactionNodeB(700, 100, 100, 50, 20, "Dest", "font.ttf","black");
 	TransactionNodeB.TransformIntoButton("white", "black", 0);
 	transactionWindow.addDrawing(TransactionNodeB.getBitmap(), TransactionNodeB.getX(), TransactionNodeB.getY());
 	Node * nodeB = nullptr;
+	bool nodeBPressedOnce = false;
 
 	WritableBox cash(KeyboardMode::Numeric, 300, 400, 20, 20, "font.ttf", "black");
 	cash.setBackgroundColor("white");
@@ -80,13 +84,10 @@ int main(int argc, char ** argv)
 			ALLEGRO_MOUSE_EVENT mouse = eventFactory.getMouseEvent();
 			if (mouse.display == mainDisp) {
 				
-				if (transactionWindow.isOpen() && TransactionNodeA.isPressed()) {
+				if (transactionWindow.isOpen() && TransactionNodeA.isPressed()) 
 					getNodeForTransaction(&nodeA, drawer, transactionWindow, TransactionNodeA, mouse);
-				}
-				else if (transactionWindow.isOpen() && TransactionNodeB.isPressed()) {
+				else if (transactionWindow.isOpen() && TransactionNodeB.isPressed()) 
 					getNodeForTransaction(&nodeB, drawer, transactionWindow, TransactionNodeB, mouse);
-
-				}
 				else {
 					void * temp = drawer.NodePressed(mouse.x, mouse.y);
 					if (temp) {

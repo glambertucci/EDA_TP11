@@ -58,26 +58,22 @@ void Drawer::createInformationWindow(ALLEGRO_DISPLAY * displ, void * node)
 	float yOffset = 50;
 	int i = -1;
 	float boxHeight = 50;
-	shared_ptr<WrittenBox> PublicKey(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Private Key:", "font.ttf", "white"))
-		, PrivateKey(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Public Key:", "font.ttf", "white"))
+	shared_ptr<WrittenBox> BlocksMined(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Blocks Mined:", "font.ttf", "white"))
+		, lastMinerKey(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Last Miner:", "font.ttf", "white"))
 		, NodeType(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Node Type:", "font.ttf", "white"));
-		//, Money(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Money:", "font.ttf", "white"))
 
-	temp->titles.push_back(PrivateKey);
-	temp->titles.push_back(PublicKey);
+	temp->titles.push_back(BlocksMined);
+	temp->titles.push_back(lastMinerKey);
 	temp->titles.push_back(NodeType);
-//	temp->titles.push_back(Money);
 	i = 0;
 
-	shared_ptr<WrittenBox> PublicKeyValue(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,"", "font.ttf", "white")) //DEBUG
-		, PrivateKeyValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "", "font.ttf", "white"))
-		, nodeTypeValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "Miner", "font.ttf", "white"))
-		//, MoneyValue(new WrittenBox(xOffset,100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, "0", "font.ttf", "white"))
+	shared_ptr<WrittenBox> BlocksMinedValue(new WrittenBox(xOffset, 100 +  yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,to_string(temp->graficNode->node->getBlocksMined()), "font.ttf", "white"))
+		, lastMinerValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15, (temp->graficNode->node->isItLastMiner() ? "Yes" : "No"), "font.ttf", "white"))
+		, nodeTypeValue(new WrittenBox(xOffset, 100 + yOffset * (i += 2), w - xOffset * 2, boxHeight, 15,(temp->graficNode->node->isItMiner()? "Miner": "Full Service"), "font.ttf", "white"))
 		;
-	temp->values.push_back(PublicKeyValue);
-	temp->values.push_back(PrivateKeyValue);
+	temp->values.push_back(BlocksMinedValue);
+	temp->values.push_back(lastMinerValue);
 	temp->values.push_back(nodeTypeValue);
-	//temp->values.push_back(MoneyValue);
 
 	this->windows.push_back(temp);
 	// DEBUG

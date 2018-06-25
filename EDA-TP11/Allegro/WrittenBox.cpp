@@ -91,6 +91,10 @@ bool WrittenBox::checkIfPressed(float x, float y)
 		if ((this->x <= x) && (x <= this->x + this->width))
 			if ((this->y <= y) && (y <= (this->y + this->height)))
 				this->pressed = true;
+			else
+				this->pressed = false;
+		else
+			this->pressed = false;
 		
 	}
 	if (pressed) {
